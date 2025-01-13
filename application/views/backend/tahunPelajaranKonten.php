@@ -26,7 +26,8 @@
     </div>
 </div>
 
-<div class="modal" id="modalTahunPelajaran" tabindex="-1" role="dialog">
+<!-- Modal untuk Tahun Pelajaran -->
+<div class="modal" id="modalTahunPelajaran" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -38,7 +39,6 @@
             <div class="modal-body">
                 <form id="formTahunPelajaran">
                     <input type="hidden" class="form-control" id="id" name="id">
-
                     <div class="mb-1">
                         <label for="nama_tahun_pelajaran" class="form-label">Nama Tahun Pelajaran</label>
                         <input type="text" class="form-control" id="nama_tahun_pelajaran" name="nama_tahun_pelajaran">
@@ -156,25 +156,41 @@
         }
     }
 
-    // Fungsi untuk mengedit data
-    function editTahunPelajaran(id) {
-        $.ajax({
-            url: '<?php echo base_url("tahun_pelajaran/get_tahun_pelajaran"); ?>/' + id,
-            type: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                if (response.status) {
-                    const data = response.data;
-                    $('#id').val(data.id);
-                    $('#nama_tahun_pelajaran').val(data.nama_tahun_pelajaran);
-                    $('#tanggal_mulai').val(data.tanggal_mulai);
-                    $('#tanggal_akhir').val(data.tanggal_akhir);
-                    $('#status_tahun_pelajaran').val(data.status_tahun_pelajaran);
-                    $('#modalTahunPelajaran').modal('show');
-                } else {
-                    alert('Gagal mengambil data.');
+    // Mengelola elemen modal dan inert
+    $('#modalTahunPelajaran').on('show.bs.modal', function () {
+        $(this).removeAttr('aria-hidden'); // Hapus aria-hidden saat modal muncul
+        $(this).attr('aria-modal', 'true'); // Menandai modal aktif
+        $('body').css('overflow', 'hidden'); // Menonaktifkan scroll di belakang modal
+        $(this).focus(); // Fokus pada modal
+    });
+
+    $('#modalTahunPelajaran').on('hide.bs.modal', function () {
+        $(this).attr('aria-hidden', 'true'); // Menambahkan aria-hidden saat modal ditutup
+        $(this).removeAttr('aria-modal'); // Menghapus aria-modal
+        $('body').removeAttr('style'); // Kembalikan scroll saat modal ditutup
+    });
+
+    // Fokus Trap di Modal
+    $('#modalTahunPelajaran').on('show.bs.modal', function () {
+        const modal = $(this);
+        const focusableElements = modal.find('input, button, select, a, [tabindex]:not([tabindex="-1"])');
+        const firstFocusableElement = focusableElements[0];
+        const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+        modal.on('keydown', function (e) {
+            if (e.key === 'Tab') {
+                if (e.shiftKey) { // Shift + Tab
+                    if (document.activeElement === firstFocusableElement) {
+                        lastFocusableElement.focus();
+                        e.preventDefault();
+                    }
+                } else { // Tab
+                    if (document.activeElement === lastFocusableElement) {
+                        firstFocusableElement.focus();
+                        e.preventDefault();
+                    }
                 }
             }
         });
-    }
+    });
 </script>
