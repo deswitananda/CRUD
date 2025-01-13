@@ -1,19 +1,8 @@
 <?php
-<<<<<<< HEAD
-defined('BASEPATH') or exit('No direct script access allowed');
-
-class Login extends CI_Controller
-{
-    
-    const VALID_EMAIL = 'admin';
-    const VALID_PASSWORD = '12345';
-
-=======
 defined('BASEPATH') or exit('No direct scirpt access allowed');
 
 class Login extends CI_Controller
 {
->>>>>>> cd2defb (Update AdminLTE)
     public function __construct()
     {
         parent::__construct();
@@ -26,48 +15,6 @@ class Login extends CI_Controller
 
     public function proses_login()
     {
-<<<<<<< HEAD
-        $email = $this->input->post('email');
-        $password = $this->input->post('password');
-
-        $errors = [];
-        if (empty($email)) {
-            $errors['email'] = 'Email wajib diisi';
-        }
-        if (empty($password)) {
-            $errors['password'] = 'Password wajib diisi';
-        }
-
-        if (!empty($errors)) {
-          
-            echo json_encode([
-                'status' => false,
-                'element' => array_keys($errors),
-                'error' => array_values($errors),
-                'message' => 'Login Gagal'
-            ]);
-            return;
-        }
-
-      
-        if ($email === self::VALID_EMAIL && $password === self::VALID_PASSWORD) {
-            echo json_encode([
-                'status' => true,
-                'email' => $email,
-                'password' => $password,
-                'message' => 'Login Berhasil'
-            ]);
-        } else {
-            echo json_encode([
-                'status' => false,
-                'element' => ['email', 'password'],
-                'error' => ['Email atau password salah', 'Email atau password salah'],
-                'message' => 'Login Gagal'
-            ]);
-        }
-    }
-}
-=======
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
@@ -103,4 +50,3 @@ class Login extends CI_Controller
     }
 }
 ?>
->>>>>>> cd2defb (Update AdminLTE)

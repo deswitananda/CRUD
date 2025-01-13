@@ -1,14 +1,8 @@
 <?php
-<<<<<<< HEAD
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-class Welcome extends CI_Controller {
-=======
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Welcome extends CI_Controller
 {
->>>>>>> cd2defb (Update AdminLTE)
 
 	/**
 	 * Index Page for this controller.
@@ -30,15 +24,8 @@ class Welcome extends CI_Controller
 		$this->load->view('welcome_message');
 	}
 
-<<<<<<< HEAD
-	public function selamat(){
-		echo "ini fungsi selamat datang";
-	}
-}
-=======
 	public function selamat()
 	{
 		echo 'ini fungsi selamat datang';
 	}
 }
->>>>>>> cd2defb (Update AdminLTE)

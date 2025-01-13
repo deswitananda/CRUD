@@ -1,9 +1,5 @@
 <?php
-<<<<<<< HEAD
-defined('BASEPATH') OR exit('No direct script access allowed');
-=======
 defined('BASEPATH') or exit('No direct script access allowed');
->>>>>>> cd2defb (Update AdminLTE)
 
 /*
 | -------------------------------------------------------------------------
@@ -53,32 +49,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-<<<<<<< HEAD
-// $route['default_controller'] = 'welcome';
-// $route['404_override'] = '';
-// $route['translate_uri_dashes'] = FALSE;
-// $route['selamat_datang']= 'welcome/index';
-// $route['selamat']= 'welcome/selamat';
+/* $route['default_controller'] = 'welcome';
+$route['404_override'] = '';
+$route['translate_uri_dashes'] = FALSE;
+$route['selamat-datang'] = 'welcome/index';
+$route['selamat'] = 'welcome/selamat'; */
 
 $route = array(
-    'default_controller' => 'welcome',
-    '404_override' => '',
-    'translate_uri_dashes' => false,
-    'selamat_datang' => 'welcome/index',
-    'selamat' => 'welcome/selamat',
-    
+	'default_controller' => 'welcome',
+	'404_override' => '',
+	'translate_uri_dashes' => false,
+	'selamat-datang' => 'welcome/index',
+	'selamat' =>  'welcome/selamat',
+
 );
-=======
-$route['default_controller'] = 'welcome'; // Default controller
-$route['404_override'] = ''; // Halaman 404 jika URL tidak ditemukan
-$route['translate_uri_dashes'] = FALSE; // Opsi penerjemahan URI dengan tanda dash
-
-// Tambahkan rute Anda di sini
-$route['login'] = 'login/index';
-$route['login/proses_login'] = 'login/proses_login';
-$route['dashboard'] = 'dashboard/index';
-
-// Rute lain (contoh)
-$route['selamat-datang'] = 'welcome/index';
-$route['selamat'] = 'welcome/selamat';
->>>>>>> cd2defb (Update AdminLTE)
