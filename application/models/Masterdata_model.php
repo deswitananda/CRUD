@@ -16,12 +16,16 @@ class Masterdata_model extends CI_Model
 
 	public function getAllTahunPelajaran()
 	{
-		return  $this->db->get($this->tableTahunPelajaran);
+		return $this->db->get($this->tableTahunPelajaran);
 	}
 
-	public function getAllKelas() {}
+	public function getAllKelas() {
+        return $this->db->get($this->tableKelas);
+    }
 
-	public function getAllJurusan() {}
+	public function getAllJurusan() {
+        return $this->db->get($this->tableJurusan);
+    }
 
 	# code...
 

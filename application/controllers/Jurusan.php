@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Tahun_pelajaran extends CI_Controller
+class Jurusan extends CI_Controller
 {
 
 	public function __construct()
@@ -15,16 +15,16 @@ class Tahun_pelajaran extends CI_Controller
 
 		$data = array(
 			'menu' => 'backend/menu',
-			'content' => 'backend/tahunPelajaranKonten',
+			'content' => 'backend/jurusanKonten',
 			'title' => 'Admin'
 		);
 		$this->load->view('template', $data);
 	}
 
-	public function table_tahun_pelajaran()
+	public function table_Jurusan()
 	{
 
-		$q = $this->md->getAllTahunPelajaran();
+		$q = $this->md->getAllJurusan();
 		$dt = [];
 		if ($q->num_rows() > 0) {
 			foreach ($q->result() as $row) {
@@ -42,8 +42,6 @@ class Tahun_pelajaran extends CI_Controller
 
 		echo json_encode($ret);
 	}
-
-	
 }
 
-/* End of file: Tahun_pelajaran.php */
+/* End of file: Jurusan.php */

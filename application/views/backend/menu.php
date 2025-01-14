@@ -22,13 +22,13 @@
 			</a>
 		</li>
 		<li class="nav-item">
-			<a href="#" class="nav-link ">
+			<a href="<?php echo base_url('jurusan') ?>" class="nav-link ">
 				<i class="far fa-circle nav-icon"></i>
 				<p>Data Jurusan</p>
 			</a>
 		</li>
 		<li class="nav-item">
-			<a href="#" class="nav-link ">
+			<a href="<?php echo base_url('kelas') ?>" class="nav-link ">
 				<i class="far fa-circle nav-icon"></i>
 				<p>Data Kelas</p>
 			</a>
