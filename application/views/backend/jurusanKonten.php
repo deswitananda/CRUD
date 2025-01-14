@@ -2,17 +2,19 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
-				<h3 class="card-title">Jurusan</h3>
+				<h3 class="card-title">Data Jurusan</h3>
 			</div>
 			<div class="card-body">
-				<div class="btn btn-primary btnTambahJurusan mb-2"> <i class="fas fa-plus"></i> Tambah</div>
+				<div class="btn btn-primary btnTambah mb-2"> <i class="fas fa-plus"></i> Tambah</div>
 				<div class="row">
-					<table class="table table-striped" id="tabelJurusan">
+					<table class="table table-striped" id="tabel">
 						<thead>
 							<tr>
 								<th>No</th>
+								<th>Tahun Pelajaran</th>
 								<th>Nama Jurusan</th>
-                                <th>Tahun Pelajaran</th>
+
+
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -25,7 +27,7 @@
 	</div>
 </div>
 
-<div class="modal" id="modalJurusan" tabindex=" -1" role="dialog">
+<div class="modal" id="modal" tabindex=" -1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -37,21 +39,22 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-user">
-					<form action="#" method="post" enctype="multipart/form-data">
+					<form id="formJurusan" action="#" method="post" enctype="multipart/form-data">
 						<input type="hidden" class="form-control" id="id" name="id" value="">
 
 						<div class="mb-1">
-							<label for="nama_jurusan" class="form-label">Nama Jurusan</label>
-							<input type="text" class="form-control" id="nama_tahun_pelajaran" name="nama_tahun_pelajaran" value="">
-							<div class="error-block"></div>
-						</div>
-						<div class="mb-1">
-							<label for="nama_tahun_pelajaran" class="form-label">Tahun Pelajaran</label>
-							<select class="form-control" id="nama_tahun_pelajaran" name="nama_tahun_pelajaran">
-								<option value="">Pilih Tahun Pelajaran</option>
+							<label for="nama_tahun_pelajaran" class="form-label">Nama Tahun Pelajaran</label>
+							<select class="form-control" name="id_tahun_pelajaran" id="id_tahun_pelajaran">
+								<option value="">- Pilih Tahun Pelajaran -</option>
 							</select>
 							<div class="error-block"></div>
 						</div>
+						<div class="mb-1">
+							<label for="nama_jurusan" class="form-label">Nama Jurusan</label>
+							<input type="text" class="form-control" id="nama_jurusan" name="nama_jurusan" value="">
+							<div class="error-block"></div>
+						</div>
+
 					</form>
 
 					<div>
@@ -70,16 +73,15 @@
 
 
 
-
-
 <script>
 	$(document).ready(function() {
-		tabelJurusan();
+		tabel();
+		$('#id_tahun_pelajaran').load('<?php echo base_url('jurusan/option_tahun_pelajaran'); ?>');
 	})
 
-	function tabelJurusan() {
-		let tabelJurusan = $('#tabelJurusan');
-		let tr = $('<tr>');
+	function tabel() {
+		let tabel = $('#tabel');
+		let tr = '';
 		$.ajax({
 			url: '<?php echo base_url('jurusan/table_jurusan'); ?>',
 			type: 'GET',
@@ -87,97 +89,99 @@
 			dataType: 'json',
 			success: function(response) {
 				if (response.status) {
-					tabelJurusan.find('tbody').html('');
+					tabel.find('tbody').html('');
 					let no = 1;
 					$.each(response.data, function(i, item) {
+						tr = $('<tr>');
 
 						tr.append('<td>' + no++ + '</td>');
-						tr.append('<td>' + item.nama_jurusan + '</td>');
 						tr.append('<td>' + item.nama_tahun_pelajaran + '</td>');
+						tr.append('<td>' + item.nama_jurusan + '</td>');
+
 						tr.append('<td>	<button class="btn btn-primary" onclick="editJurusan(' + item.id + ')">Edit</button> <button class="btn btn-danger" onclick="deleteJurusan(' + item.id + ')">Delete</button></td>');
-						tabelJurusan.find('tbody').append(tr);
+						tabel.find('tbody').append(tr);
 					});
 
 				} else {
-					tabelJurusan.find('tbody').html('');
+					tr = $('<tr>');
+					tabel.find('tbody').html('');
 					tr.append('<td colspan="4">' + response.message + '</td>');
 				}
 			}
 		});
 	}
 
-	$('.btnTambahJurusan').click(function() {
-		$('#modalJurusan').modal('show');
+	$('.btnTambah').click(function() {
+		$('#id').val('');
+		$('#formJurusan').trigger('reset');
+		$('#modal').modal('show');
 	});
-
 	$('.saveBtn').click(function() {
-		let id = $('#id').val();
-			let nama_tahun_pelajaran = $('#nama_tahun_pelajaran').val();
-			let nama_jurusan = $('#nama_jurusan').val();
-			let url = '<?php echo base_url('jurusan/save'); ?>';
-				$.ajax({
-					url: url,
-					type: 'POST',
-					data: {
-						id: id,
-						nama_tahun_pelajaran: nama_tahun_pelajaran,
-						nama_jurusan: nama_jurusan,
-					},
-					dataType: 'json',
-					success: function(response) {
-						if (response.status) {
-							alert(response.message);
-							$('#modalJurusan').modal('hide');
-							tableJurusan();
-						} else {
-							alert(response.message);
-						}
-					}
-				});
-	})
-	
-	function editJurusan(id){
-			$.ajax({
-				url: '<?php echo base_url('jurusan/edit'); ?>',
-				type: 'POST',
-				data: {
-					id: id
-				},
-				dataType: 'json',
-				success: function(response) {
-					if (response.status) {
-						$('#id').val(response.data.id);
-						$('#nama_tahun_pelajaran').val(response.data.nama_tahun_pelajaran);
-						$('#nama_jurusan').val(response.data.nama_jurusan);
-						$('#modalJurusan').modal('show');
-						tableJurusan();
-					} else {
-						alert(response.message);
-					}
+		// lakukan proses simpan data, lalu tutup modal , lalu reload tabel
+		$.ajax({
+			url: '<?php echo base_url('jurusan/save'); ?>',
+			type: 'POST',
+			data: {
+				id: $('#id').val(),
+				id_tahun_pelajaran: $('#id_tahun_pelajaran').val(),
+				nama_jurusan: $('#nama_jurusan').val(),
+
+			},
+			dataType: 'json',
+			success: function(response) {
+				if (response.status) {
+					alert(response.message);
+					$('#modal').modal('hide');
+					tabel();
+				} else {
+					alert(response.message);
 				}
-			});
-	}
+			}
+
+		})
+	})
+
+
+	function editJurusan(id) {
+		// tampilkan data dalam modal 
+		$.ajax({
+			url: '<?php echo base_url('jurusan/edit'); ?>',
+			type: 'POST',
+			data: {
+				id: id,
+			},
+			dataType: 'json',
+			success: function(response) {
+				if (response.status) {
+					$('#id').val(response.data.id);
+					$('#id_tahun_pelajaran').val(response.data.id_tahun_pelajaran);
+					$('#nama_jurusan').val(response.data.nama_jurusan);
+
+					$('#modal').modal('show');
+				} else {
+					alert(response.message);
+				}
+			}
+		})
+	};
 
 	function deleteJurusan(id) {
-		if (confirm('Apakah Anda yakin ingin menghapus user ini?')) {
-			let url = '<?php echo base_url('jurusan/delete'); ?>';
-			$.ajax({
-				url: url,
-				type: 'POST',
-				data: {
-					id: id
-				},
-				dataType: 'json',
-				success: function(response) {
-					if (response.status) {
-						alert(response.message);
-						tabelJurusan();
-					} else {
-						alert(response.message);
-					}
+		// lakukan proses delete data, lalu reload tabel
+		$.ajax({
+			url: '<?php echo base_url('jurusan/delete'); ?>',
+			type: 'POST',
+			data: {
+				id: id,
+			},
+			dataType: 'json',
+			success: function(response) {
+				if (response.status) {
+					alert(response.message);
+					tabel();
+				} else {
+					alert(response.message);
 				}
-			});
-		}
-
-	}
+			}
+		})
+	};
 </script>
