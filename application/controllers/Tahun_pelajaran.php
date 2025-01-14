@@ -42,30 +42,6 @@ class Tahun_pelajaran extends CI_Controller
 
 		echo json_encode($ret);
 	}
-	public function save_tahun_pelajaran()
-    {
-        $data = $this->input->post();
-        // Validasi
-        if (empty($data['nama_tahun_pelajaran'])) {
-            echo json_encode(['status' => false, 'message' => 'Nama tahun pelajaran harus diisi']);
-            return;
-        }
-
-        $saveData = [
-            'nama_tahun_pelajaran' => $data['nama_tahun_pelajaran'],
-            'tanggal_mulai' => $data['tanggal_mulai'],
-            'tanggal_akhir' => $data['tanggal_akhir'],
-            'status_tahun_pelajaran' => $data['status_tahun_pelajaran'],
-        ];
-
-        if (isset($data['id']) && $data['id']) {
-            $this->md->updateTahunPelajaran($data['id'], $saveData);
-        } else {
-            $this->md->insertTahunPelajaran($saveData);
-        }
-
-        echo json_encode(['status' => true, 'message' => 'Data berhasil disimpan!']);
-    }
 }
 
 /* End of file: Tahun_pelajaran.php */
