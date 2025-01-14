@@ -11,10 +11,8 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>Tahun Pelajaran</th>
-								<th>Mulai</th>
-								<th>Akhir</th>
-								<th>Status</th>
+								<th>Nama Jurusan</th>
+                                <th>Tahun Pelajaran</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -33,7 +31,7 @@
 			<div class="modal-header">
 				<h5 class="modal-title">Tambah Jurusan</h5>
 
-				<button type="button" class="close " data-bs-dismiss="modal" aria-label="Close">
+				<button type="button" class="close " data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -44,29 +42,16 @@
 
 						<div class="mb-1">
 							<label for="nama_jurusan" class="form-label">Nama Jurusan</label>
-							<input type="text" class="form-control" id="nama_jurusan" name="nama_jurusan" value="">
+							<input type="text" class="form-control" id="nama_tahun_pelajaran" name="nama_tahun_pelajaran" value="">
 							<div class="error-block"></div>
 						</div>
 						<div class="mb-1">
-							<label for="tanggal_mulai" class="form-label">Tanggal Mulai</label>
-							<input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="">
-							<div class="error-block"></div>
-						</div>
-						<div class="mb-1">
-							<label for="tanggal_akhir" class="form-label">Tanggal Akhir</label>
-							<input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" value="">
-							<div class="error-block"></div>
-						</div>
-						<div class="mb-1">
-							<label for="status_jurusan" class="form-label">Status</label>
-							<select class="form-control" id="status_jurusan" name="status_jurusan">
-								<option value="1">Aktif</option>
-								<option value="0">Tidak Aktif</option>
+							<label for="nama_tahun_pelajaran" class="form-label">Tahun Pelajaran</label>
+							<select class="form-control" id="nama_tahun_pelajaran" name="nama_tahun_pelajaran">
+								<option value="">Pilih Tahun Pelajaran</option>
 							</select>
 							<div class="error-block"></div>
 						</div>
-
-
 					</form>
 
 					<div>
@@ -77,11 +62,13 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary saveBtn">Simpan</button>
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 			</div>
 		</div>
 	</div>
 </div>
+
+
 
 
 
@@ -106,10 +93,8 @@
 
 						tr.append('<td>' + no++ + '</td>');
 						tr.append('<td>' + item.nama_jurusan + '</td>');
-						tr.append('<td>' + item.tanggal_mulai + '</td>');
-						tr.append('<td>' + item.tanggal_akhir + '</td>');
-						tr.append('<td>' + item.status_jurusan + '</td>');
-						tr.append('<td>	<button class="btn btn-primary" onclick="editJurusan(' + item.id + ')">Edit</button> <button class="btn btn-danger" onclick="deleteTahunPelajarar(' + item.id + ')">Delete</button></td>');
+						tr.append('<td>' + item.nama_tahun_pelajaran + '</td>');
+						tr.append('<td>	<button class="btn btn-primary" onclick="editJurusan(' + item.id + ')">Edit</button> <button class="btn btn-danger" onclick="deleteJurusan(' + item.id + ')">Delete</button></td>');
 						tabelJurusan.find('tbody').append(tr);
 					});
 
@@ -124,13 +109,75 @@
 	$('.btnTambahJurusan').click(function() {
 		$('#modalJurusan').modal('show');
 	});
+
 	$('.saveBtn').click(function() {
-		// lakukan proses simpan data, lalu tutup modal , lalu reload tabel
+		let id = $('#id').val();
+			let nama_tahun_pelajaran = $('#nama_tahun_pelajaran').val();
+			let nama_jurusan = $('#nama_jurusan').val();
+			let url = '<?php echo base_url('jurusan/save'); ?>';
+				$.ajax({
+					url: url,
+					type: 'POST',
+					data: {
+						id: id,
+						nama_tahun_pelajaran: nama_tahun_pelajaran,
+						nama_jurusan: nama_jurusan,
+					},
+					dataType: 'json',
+					success: function(response) {
+						if (response.status) {
+							alert(response.message);
+							$('#modalJurusan').modal('hide');
+							tableJurusan();
+						} else {
+							alert(response.message);
+						}
+					}
+				});
 	})
-	$('.editBtn').click(function() {
-		// tampilkan data dalam modal 
-	})
-	$('.deleteBtn').click(function() {
-		// lakukan proses delete data, lalu reload tabel
-	})
+	
+	function editJurusan(id){
+			$.ajax({
+				url: '<?php echo base_url('jurusan/edit'); ?>',
+				type: 'POST',
+				data: {
+					id: id
+				},
+				dataType: 'json',
+				success: function(response) {
+					if (response.status) {
+						$('#id').val(response.data.id);
+						$('#nama_tahun_pelajaran').val(response.data.nama_tahun_pelajaran);
+						$('#nama_jurusan').val(response.data.nama_jurusan);
+						$('#modalJurusan').modal('show');
+						tableJurusan();
+					} else {
+						alert(response.message);
+					}
+				}
+			});
+	}
+
+	function deleteJurusan(id) {
+		if (confirm('Apakah Anda yakin ingin menghapus user ini?')) {
+			let url = '<?php echo base_url('jurusan/delete'); ?>';
+			$.ajax({
+				url: url,
+				type: 'POST',
+				data: {
+					id: id
+				},
+				dataType: 'json',
+				success: function(response) {
+					if (response.status) {
+						alert(response.message);
+						tabelJurusan();
+					} else {
+						alert(response.message);
+					}
+				}
+			});
+		}
+
+	}
 </script>
