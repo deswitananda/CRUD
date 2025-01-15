@@ -134,5 +134,3 @@ class Jurusan extends CI_Controller
 		echo json_encode($ret);
 	}
 }
-
-/* End of file: Jurusan.php */
