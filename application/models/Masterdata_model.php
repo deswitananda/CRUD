@@ -25,37 +25,37 @@ class Masterdata_model extends CI_Model
 		return  $this->db->get($this->tableTahunPelajaran);
 	}
 
-	public function getAllTahunPelajaranNotDeleted(){
+	public function getAllTahunPelajaranNotDeleted()
+	{
 		$this->db->where('deleted_at', 0);
 		return  $this->db->get($this->tableTahunPelajaran);
 	}
-
-	public function getNamaTahunPelajaran($nama_tahun_pelajaran)
+	public function getTahunPelajaranByName($nama_tahun_pelajaran)
 	{
-		$q = $this->db->where('nama_tahun_pelajaran', $nama_tahun_pelajaran)->get($this->tableTahunPelajaran);
-		return $q;
+		$this->db->where('nama_tahun_pelajaran', $nama_tahun_pelajaran);
+		return $this->db->get($this->tableTahunPelajaran);
 	}
 
-	public function getTahunPelajaranByID($id = null){
-
-		return $this->db->where('id', $id)->get($this->tableTahunPelajaran);
+	public function getTahunPelajaranByID($id)
+	{
+		$this->db->where('id', $id);
+		return $this->db->get($this->tableTahunPelajaran);
 	}
 
-	public function cekTahunPelajaranDuplicate($nama_tahun_pelajaran, $id){
-		if($id){
+	public function cekTahunPelajaranDuplicate($nama_tahun_pelajaran, $id)
+	{
+		if ($id) {
 			$this->db->where('id !=', $id);
 		}
 		$this->db->where('nama_tahun_pelajaran', $nama_tahun_pelajaran);
 		return $this->db->get($this->tableTahunPelajaran);
 	}
-	
-	public function deleteTahunPelajaran($id = null)
-	{
-		$this->db->where('id', $id);
-		$this->db->delete($this->tableTahunPelajaran);
-		return $this->db->affected_rows();
-	}
 
+	public function  saveTahunPelajaran($data)
+	{
+		$this->db->insert($this->tableTahunPelajaran, $data);
+		return $this->db->insert_id();
+	}
 	public function updateTahunPelajaran($id, $data)
 	{
 		$this->db->where('id', $id);
@@ -63,33 +63,41 @@ class Masterdata_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	public function insertTahunPelajaran($data)
+	public function deleteTahunPelajaran($id)
 	{
-		$this->db->insert($this->tableTahunPelajaran, $data);
-		return $this->db->insert_id();
-	}
-
-
-
-
-	public function getAllJurusan() {
-		return  $this->db->get($this->tableJurusan);
-	}
-	
-	public function getJurusanByID($id = null){
-
 		$this->db->where('id', $id);
+		$this->db->delete($this->tableTahunPelajaran);
+		return $this->db->affected_rows();
+	}
+
+
+
+	public function getAllJurusan()
+	{
 		return $this->db->get($this->tableJurusan);
 	}
-
-	public function getAllJurusanNotDeleted(){
+	public function getAllJurusanNotDeleted()
+	{
 		$this->db->select($this->tableJurusan . '.*, ' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran');
 		$this->db->join($this->tableTahunPelajaran, $this->tableTahunPelajaran . '.id = ' . $this->tableJurusan . '.id_tahun_pelajaran');
 		$this->db->where($this->tableJurusan . '.deleted_at', 0);
 		return $this->db->get($this->tableJurusan);
 	}
 
-	public function cekJurusanDuplicate($nama_jurusan, $id_tahun_pelajaran, $id){
+	public function getJurusanByID($id)
+	{
+		$this->db->where('id', $id);
+		return $this->db->get($this->tableJurusan);
+	}
+
+	public function getJurusanByTahunPelajaranID($id)
+	{
+		$this->db->where('id_tahun_pelajaran', $id);
+		return $this->db->get($this->tableJurusan);
+	}
+
+	public function cekJurusanDuplicate($nama_jurusan, $id_tahun_pelajaran, $id)
+	{
 		if ($id) {
 			$this->db->where('id !=', $id);
 		}
@@ -98,11 +106,10 @@ class Masterdata_model extends CI_Model
 		return $this->db->get($this->tableJurusan);
 	}
 
-	public function deleteJurusan($id = null)
+	public function saveJurusan($data)
 	{
-		$this->db->where('id', $id);
-		$this->db->delete($this->tableJurusan);
-		return $this->db->affected_rows();
+		$this->db->insert($this->tableJurusan, $data);
+		return $this->db->insert_id();
 	}
 
 	public function updateJurusan($id, $data)
@@ -112,20 +119,30 @@ class Masterdata_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	public function insertJurusan($data)
+	public function deleteJurusan($id)
 	{
-		$this->db->insert($this->tableJurusan, $data);
-		return $this->db->insert_id();
+		$this->db->where('id', $id);
+		$this->db->delete($this->tableJurusan);
+		return $this->db->affected_rows();
 	}
 
+	# code...
 
-	//Data Kelas
-
-	public function getAllKelas() {
-		return  $this->db->get($this->tableKelas);
+	public function getAllKelas()
+	{
+		return $this->db->get($this->tableKelas);
+	}
+	public function getAllKelasNotDeleted()
+	{
+		$this->db->select($this->tableKelas . '.*, ' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran, ' . $this->tableJurusan . '.nama_jurusan');
+		$this->db->join($this->tableJurusan, $this->tableJurusan . '.id = ' . $this->tableKelas . '.id_jurusan');
+		$this->db->join($this->tableTahunPelajaran, $this->tableTahunPelajaran . '.id = ' . $this->tableJurusan . '.id_tahun_pelajaran');
+		$this->db->where($this->tableKelas . '.deleted_at', 0);
+		return $this->db->get($this->tableKelas);
 	}
 
-	public function getKelasByID($id){
+	public function getKelasByID($id)
+	{
 		$this->db->select($this->tableKelas . '.*, ' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran, ' . $this->tableJurusan . '.nama_jurusan, ' . $this->tableJurusan . '.id_tahun_pelajaran');
 		$this->db->join($this->tableJurusan, $this->tableJurusan . '.id = ' . $this->tableKelas . '.id_jurusan', 'left');
 		$this->db->join($this->tableTahunPelajaran, $this->tableTahunPelajaran . '.id = ' . $this->tableJurusan . '.id_tahun_pelajaran', 'left');
@@ -134,20 +151,8 @@ class Masterdata_model extends CI_Model
 		return $this->db->get($this->tableKelas);
 	}
 
-	public function getAllKelasNotDeleted(){
-		$this->db->select($this->tableKelas . '.*, ' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran, ' . $this->tableJurusan . '.nama_jurusan');
-		$this->db->join($this->tableJurusan, $this->tableJurusan . '.id = ' . $this->tableKelas . '.id_jurusan');
-		$this->db->join($this->tableTahunPelajaran, $this->tableTahunPelajaran . '.id = ' . $this->tableJurusan . '.id_tahun_pelajaran');
-		$this->db->where($this->tableKelas . '.deleted_at', 0);
-		return $this->db->get($this->tableKelas);
-	}
-
-	public function getJurusanByTahunPelajaranID($id){
-		$this->db->where('id_tahun_pelajaran', $id);
-		return $this->db->get($this->tableJurusan);
-	}
-
-	public function cekKelasDuplicate($nama_kelas,  $id_jurusan, $id){
+	public function cekKelasDuplicate($nama_kelas,  $id_jurusan, $id)
+	{
 		if ($id) {
 			$this->db->where('id !=', $id);
 		}
@@ -156,11 +161,10 @@ class Masterdata_model extends CI_Model
 		return $this->db->get($this->tableKelas);
 	}
 
-	public function deleteKelas($id = null)
+	public function saveKelas($data)
 	{
-		$this->db->where('id', $id);
-		$this->db->delete($this->tableJurusan);
-		return $this->db->affected_rows();
+		$this->db->insert($this->tableKelas, $data);
+		return $this->db->insert_id();
 	}
 
 	public function updateKelas($id, $data)
@@ -170,12 +174,12 @@ class Masterdata_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	public function saveKelas($data)
+	public function deleteKelas($id)
 	{
-		$this->db->insert($this->tableKelas, $data);
-		return $this->db->insert_id();
+		$this->db->where('id', $id);
+		$this->db->delete($this->tableKelas);
+		return $this->db->affected_rows();
 	}
-
 	// Data Biaya
 	public function getAllBiayaNotDeleted(){
 		$this->db->where('deleted_at', 0);
@@ -362,8 +366,7 @@ class Masterdata_model extends CI_Model
 
 	//Data User
 	public function getUserAll(){
-		$q = $this->db->get($this->table);
-		return $q->result();
+		return $this->db->get($this->table); // Mengembalikan objek query
 	}
 
 	public function getUserByID($id = null){
