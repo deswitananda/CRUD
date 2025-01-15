@@ -7,6 +7,8 @@ class Masterdata_model extends CI_Model
 	protected $tableTahunPelajaran = 'data_tahun_pelajaran';
 	protected $tableKelas = 'data_kelas';
 	protected $tableJurusan = 'data_jurusan';
+	protected $tableBiaya = 'data_biaya';
+	protected $tableHarga = 'data_harga';
 
 	public function __construct()
 	{
@@ -174,4 +176,27 @@ class Masterdata_model extends CI_Model
 		$this->db->delete($this->tableKelas);
 		return $this->db->affected_rows();
 	}
-}
+
+	// Mengambil semua data jenis biaya
+	public function getAllJenisBiaya(){
+	    return $this->db->get('jenis_biaya');
+	}
+
+	// Mengambil semua harga biaya per kelas
+	public function getAllHargaBiayaPerKelas(){
+
+	    return $this->db->get('harga_biaya_per_kelas');
+	}
+
+	public function saveSeragam($data){
+
+	    return $this->db->insert('seragam', $data);
+	}
+
+	public function updateSeragam($id, $data){
+
+	    return $this->db->update('seragam', $data, ['id' => $id]);
+	}
+
+
+	}
