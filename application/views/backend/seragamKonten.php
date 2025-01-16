@@ -149,7 +149,7 @@
       tabelSeragam();
       tabelStok();
     })
-
+	
     $('#id_tahun_pelajaran').load('<?php echo base_url('seragam/option_tahun_pelajaran'); ?>');
 	  $('#id_tahun_pelajaran').change(function() {
       let id = $(this).val(); // id tahun pelajaran

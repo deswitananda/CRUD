@@ -126,8 +126,6 @@ class Masterdata_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	# code...
-
 	public function getAllKelas()
 	{
 		return $this->db->get($this->tableKelas);
@@ -327,7 +325,7 @@ class Masterdata_model extends CI_Model
 		if ($id) {
 			$this->db->where('id !=', $id);
 		}
-		$this->db->where('id_biaya', $id_seragam);
+		$this->db->where('id_seragam', $id_seragam);
 		$this->db->where('id_tahun_pelajaran', $id_tahun_pelajaran);
 		$this->db->where('id_jurusan', $id_jurusan);
 		$this->db->where('id_kelas', $id_kelas);
