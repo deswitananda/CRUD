@@ -314,7 +314,7 @@ class Masterdata_model extends CI_Model
 	public function getAllStokNotDeleted(){
 		$this->db->select($this->tableStok . '.*, ' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran, ' . $this->tableJurusan . '.nama_jurusan,' . $this->tableKelas . '.nama_kelas,' . $this->tableSeragam . '.nama_seragam,');
 		$this->db->join($this->tableSeragam, $this->tableSeragam . '.id = ' . $this->tableStok . '.id_seragam');
-		$this->db->join($this->tableKelas, $this->tableKelas . '.id = ' . $this->tableHargaBiaya . '.id_kelas');
+		$this->db->join($this->tableKelas, $this->tableKelas . '.id = ' . $this->tableStok . '.id_kelas');
 		$this->db->join($this->tableJurusan, $this->tableJurusan . '.id = ' . $this->tableKelas . '.id_jurusan');
 		$this->db->join($this->tableTahunPelajaran, $this->tableTahunPelajaran . '.id = ' . $this->tableJurusan . '.id_tahun_pelajaran');
 		$this->db->where($this->tableStok . '.deleted_at', 0);
