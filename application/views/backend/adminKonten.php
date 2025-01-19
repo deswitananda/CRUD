@@ -1,1 +1,1 @@
-<h1>ini halaman admin</h1>
+<h1>Halaman Admin</h1>

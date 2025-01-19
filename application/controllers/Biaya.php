@@ -20,10 +20,10 @@ class Biaya extends CI_Controller
 		);
 		$this->load->view('template', $data);
 	}
+	
 
-    public function table_biaya()
-	{
-
+	// Data Biaya
+    public function table_biaya(){
 		$q = $this->md->getAllBiayaNotDeleted();
 		$dt = [];
 		if ($q->num_rows() > 0) {
@@ -43,12 +43,11 @@ class Biaya extends CI_Controller
 		echo json_encode($ret);
 	}
 
-    public function saveBiaya()
-	{	
+    public function save_biaya(){	
 		$id = $this->input->post('id');
 		$data['nama_biaya'] = $this->input->post('nama_biaya');
 		$data['deskripsi'] = $this->input->post('deskripsi');
-		$data['created_at'] = date('Y-m-d H:i:s');
+
 		$data['updated_at'] = date('Y-m-d H:i:s');
 		$data['deleted_at'] = 0;
 
@@ -74,6 +73,7 @@ class Biaya extends CI_Controller
 						);
 					}
 				} else {
+					$data['created_at'] = date('Y-m-d H:i:s');
 					$insert = $this->md->insertBiaya($data);
 
 					if ($insert) {
@@ -98,9 +98,7 @@ class Biaya extends CI_Controller
 		echo json_encode($ret);
 	}
 
-    public function editBiaya()
-	{
-
+    public function edit_biaya(){
 		$id = $this->input->post('id');
 		$q = $this->md->getBiayaByID($id);
 
@@ -122,11 +120,10 @@ class Biaya extends CI_Controller
 		echo json_encode($ret);
 	}
 
-    public function deleteBiaya()
-	{
-
+    public function delete_biaya(){
 		$id = $this->input->post('id');
-		$q = $this->md->deleteBiaya($id);
+		$data['deleted_at'] = time();
+		$q = $this->md->updateBiaya($id, $data);
 
 		if ($q) {
 			$ret['status'] = true;
@@ -140,11 +137,9 @@ class Biaya extends CI_Controller
 	}
 
 
-    // harga biaya
-    public function table_harga_biaya()
-	{
-
-		$q = $this->md->getAllHargaBiayaNotDeleted();
+    // Data Harga Biaya
+	public function table_harga_biaya(){
+		$q = $this->md->getAllHargaBiaya();
 		$dt = [];
 		if ($q->num_rows() > 0) {
 			foreach ($q->result() as $row) {
@@ -163,70 +158,36 @@ class Biaya extends CI_Controller
 		echo json_encode($ret);
 	}
 
-    public function option_tahun_pelajaran()
-	{
-		$q = $this->md->getAllTahunPelajaranNotDeleted();
-		$ret = '<option value="">Pilih Tahun Pelajaran</option>';
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-				$ret .= '<option value="' . $row->id . '">' . $row->nama_tahun_pelajaran . '</option>';
-			}
-		}
-		echo $ret;
-	}
-
-	public function option_jurusan($id)
-	{
-
-		$q = $this->md->getJurusanByTahunPelajaranID($id);
-		$ret = '<option value="">Pilih Jurusan</option>';
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-				$ret .= '<option value="' . $row->id . '">' . $row->nama_jurusan . '</option>';
-			}
-		}
-		echo $ret;
-	}
-
-    public function option_kelas($id)
-	{
-
-		$q = $this->md->getKelasByJurusanID($id);
-		$ret = '<option value="">Pilih kelas</option>';
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-				$ret .= '<option value="' . $row->id . '">' . $row->nama_kelas . '</option>';
-			}
-		}
-		echo $ret;
-	}
-
-    public function option_biaya()
-	{
-
-		$q = $this->md->getAllBiayaNotDeleted();
-		$ret = '<option value="">Pilih Biaya</option>';
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-				$ret .= '<option value="' . $row->id . '">' . $row->nama_biaya . '</option>';
-			}
-		}
-		echo $ret;
-	}
-
-    public function saveHargaBiaya()
-	{	
+	public function save_harga_biaya(){
 		$id = $this->input->post('id');
 		$data['id_biaya'] = $this->input->post('id_biaya');
 		$data['id_tahun_pelajaran'] = $this->input->post('id_tahun_pelajaran');
-		$data['id_jurusan'] = $this->input->post('id_jurusan');
-		$data['id_kelas'] = $this->input->post('id_kelas');
 		$data['harga'] = $this->input->post('harga');
-		$data['created_at'] = date('Y-m-d H:i:s');
 		$data['updated_at'] = date('Y-m-d H:i:s');
 		$data['deleted_at'] = 0;
-
-		if ($data['harga']) {
+	
+		// Validasi harga
+		if (empty($data['harga'])) {
+			$ret['status'] = false;
+			$ret['message'] = 'Harga tidak boleh kosong';
+			echo json_encode($ret);
+			return;
+		}
+	
+		if (!is_numeric($data['harga'])) {
+			$ret['status'] = false;
+			$ret['message'] = 'Harga harus berupa angka';
+			echo json_encode($ret);
+			return;
+		}
+	
+		if ($data['id_biaya']) {
+			$cek = $this->md->cekHargaBiayaDuplicate($data['id_biaya'], $data['id_tahun_pelajaran'], $id);
+			if ($cek->num_rows() > 0) {
+				$ret['status'] = false;
+				$ret['message'] = 'Nama Biaya sudah ada';
+				$ret['query'] = $this->db->last_query();
+			} else {
 				if ($id) {
 					$update = $this->md->updateHargaBiaya($id, $data);
 					if ($update) {
@@ -241,8 +202,9 @@ class Biaya extends CI_Controller
 						);
 					}
 				} else {
+					$data['created_at'] = date('Y-m-d H:i:s');
 					$insert = $this->md->insertHargaBiaya($data);
-
+	
 					if ($insert) {
 						$ret = array(
 							'status' => true,
@@ -255,46 +217,35 @@ class Biaya extends CI_Controller
 						);
 					}
 				}
-			
-			} else {
+			}
+		} else {
 			$ret['status'] = false;
 			$ret['message'] = 'Data tidak boleh kosong';
-            $ret['query'] = $this->db->last_query();
-		
+			$ret['query'] = $this->db->last_query();
+		}
+		echo json_encode($ret);
 	}
-    echo json_encode($ret);
-    }
+	
 
-    public function editHargaBiaya()
-	{
-
+	public function edit_harga_biaya(){
 		$id = $this->input->post('id');
 		$q = $this->md->getHargaBiayaByID($id);
-
 		if ($q->num_rows() > 0) {
-			$ret = array(
-				'status' => true,
-				'data' => $q->row(),
-				'message' => '',
-			);
+			$ret['status'] = true;
+			$ret['data'] = $q->row();
+			$ret['message'] = '';
 		} else {
-			$ret = array(
-				'status' => false,
-				'data' => [],
-				'message' => 'Data tidak ditemukan',
-				'query' => $this->db->last_query()
-			);
+			$ret['status'] = false;
+			$ret['data'] = [];
+			$ret['message'] = 'Data tidak tersedia';
 		}
-
 		echo json_encode($ret);
 	}
 
-    public function deleteHargaBiaya()
-	{
-
+	public function delete_harga_biaya(){
 		$id = $this->input->post('id');
-		$q = $this->md->deleteHargaBiaya($id);
-
+		$data['deleted_at'] = time();
+		$q = $this->md->updateHargaBiaya($id, $data);
 		if ($q) {
 			$ret['status'] = true;
 			$ret['message'] = 'Data berhasil dihapus';
@@ -302,8 +253,19 @@ class Biaya extends CI_Controller
 			$ret['status'] = false;
 			$ret['message'] = 'Data gagal dihapus';
 		}
-
 		echo json_encode($ret);
 	}
-}
 
+	public function option_biaya(){
+		$q = $this->md->getBiayaNotDeleted();
+		$opt = '<option value="">Pilih Jenis Biaya</option>';
+		if ($q->num_rows() > 0) {
+			foreach ($q->result() as $row) {
+				$opt .= '<option value="' . $row->id . '">' . $row->nama_biaya . '</option>';
+			}
+		}
+		echo $opt;
+	}
+
+
+}

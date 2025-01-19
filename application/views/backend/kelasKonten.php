@@ -5,9 +5,9 @@
 				<h3 class="card-title">Data Kelas</h3>
 			</div>
 			<div class="card-body">
-				<div class="btn btn-primary btnTambah mb-2"> <i class="fas fa-plus"></i> Tambah</div>
+				<div class="btn btn-primary tambahBtn mb-2" data-method="kelas"> <i class="fas fa-plus"></i> Tambah</div>
 				<div class="row">
-					<table class="table table-striped" id="tabel">
+					<table class="table table-striped" id="table_kelas">
 						<thead>
 							<tr>
 								<th>No</th>
@@ -28,7 +28,7 @@
 	</div>
 </div>
 
-<div class="modal" id="modal" tabindex=" -1" role="dialog">
+<div class="modal" id="modal_kelas" tabindex=" -1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -40,7 +40,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-user">
-					<form id="formKelas" action="#" method="post" enctype="multipart/form-data">
+					<form id="form_kelas" action="#" method="post" enctype="multipart/form-data">
 						<input type="hidden" class="form-control" id="id" name="id" value="">
 
 						<div class="mb-1">
@@ -72,7 +72,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary saveBtn">Simpan</button>
+				<button type="button" class="btn btn-primary saveBtn" data-target="kelas" data-method="kelas">Simpan</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 			</div>
 		</div>
@@ -81,7 +81,7 @@
 
 
 
-<script>
+<!-- <script>
 	$(document).ready(function() {
 		tabel();
 		$('#id_tahun_pelajaran').load('<?php echo base_url('kelas/option_tahun_pelajaran'); ?>');
@@ -90,6 +90,7 @@
 			let url = '<?php echo base_url('kelas/option_jurusan'); ?>';
 			$('#id_jurusan').load(url + '/' + id);
 		})
+		
 
 	})
 
@@ -131,6 +132,7 @@
 		$('#formKelas').trigger('reset');
 		$('#modal').modal('show');
 	});
+	
 	$('.saveBtn').click(function() {
 		// lakukan proses simpan data, lalu tutup modal , lalu reload tabel
 		$.ajax({
@@ -209,4 +211,4 @@
 		});
 
 	}
-</script>
+</script> -->
