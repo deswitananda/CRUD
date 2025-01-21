@@ -1,48 +1,68 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login extends CI_Controller
-{
+class Login extends CI_Controller {
     public function __construct(){
         parent::__construct();
-        $this->load->library('form_validation'); 
-        $this->load->database(); 
-        $this->load->helper(['url', 'form']); 
-        $this->load->library('session'); 
+        $this->load->model('User_model');
+        
     }
 
     public function index(){
         $this->load->view('view_login');
     }
 
-    public function proses_login(){
-        // Validasi input
-        $this->form_validation->set_rules('username', 'Username', 'required');
-        $this->form_validation->set_rules('password', 'Password', 'required');
 
-        if ($this->form_validation->run() == FALSE) {
-            // Jika validasi gagal
-            $this->session->set_flashdata('error', 'Username dan Password harus diisi!');
-            redirect('login');
-        } else {
-            $username = $this->input->post('username');
-            $password = $this->input->post('password');
-            $user = $this->db->where('username', $username)->get('user')->row();
+    public function proses_login() {
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
 
-            if ($user && $user->password === $password) {
-                $this->session->set_userdata(['user_id' => $user->id, 'username' => $user->username]);
-                redirect('admin'); // Arahkan ke halaman admin
-            } else {
-                $this->session->set_flashdata('error', 'Username atau password salah');
-                redirect('login');
-            }
-        }
+		$this->form_validation->set_rules('username', 'Username', 'trim|required', array('required' => '%s harus diisi'));
+		$this->form_validation->set_rules('password', 'Password', 'trim|required', array('required' => '%s harus diisi'));
+
+		if ($this->form_validation->run() == FALSE) {
+			$ret['status'] = false;
+			foreach ($_POST as $key => $value) {
+				$ret['error'][$key] = form_error($key);
+			}
+		} else {
+			$q = $this->User_model->login($username, $password);
+			if ($q->num_rows() > 0) {
+
+				$sess = array(
+					'is_login' => TRUE,
+					'username' => $q->row()->username
+				);
+
+				$this->session->set_userdata($sess);
+
+				$ret = array(
+					'username' => $username,
+					'password' => $password,
+					'error' => '',
+					'status' => true,
+					'message' => 'Login Berhasil',
+				);
+			} else {
+				$ret = array(
+					'element' => '',
+					'error' => '',
+					'status' => false,
+					'message' => 'Username atau Password Salah'
+				);
+			}
+		}
+    
+
+    
+        echo json_encode($ret);
+    
     }
 
-    // Logout
-    public function logout()
-    {
+    public function logout() {
         $this->session->sess_destroy();
-        redirect('login');
+        echo json_encode(['status' => true, 'message' => 'Logout berhasil.']);
     }
+ 
+
 }

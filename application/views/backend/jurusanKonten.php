@@ -5,15 +5,15 @@
 				<h3 class="card-title">Data Jurusan</h3>
 			</div>
 			<div class="card-body">
-				<div class="btn btn-primary tambahBtn mb-2" data-method="jurusan"> <i class="fas fa-plus"></i> Tambah</div>
+				<div class="btn btn-primary tambahBtn mb-2" data-target="jurusan"> <i class="fas fa-plus"></i> Tambah</div>
 				<div class="row">
-					<table class="table table-striped" id="table_jurusan">
+					<table class="table table-striped" id="table_jurusan" data-target="jurusan">
 						<thead>
 							<tr>
-								<th>No</th>
-								<th>Tahun Pelajaran</th>
-                                <th>Nama Jurusan</th>
-								<th>Aksi</th>
+								<th data-key="no">No</th>
+								<th data-key="nama_tahun_pelajaran">Tahun Pelajaran</th>
+                                <th data-key="nama_jurusan">Nama Jurusan</th>
+								<th data-key="btn_aksi">Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -41,17 +41,19 @@
 						<input type="hidden" class="form-control" id="id" name="id" value="">
 
 						<div class="mb-1">
-							<label for="nama_tahun_pelajaran" class="form-label">Tahun Pelajaran</label>
-							<select class="form-control" id="id_tahun_pelajaran" name="id_tahun_pelajaran">
-								<option value="">Pilih Tahun Pelajaran</option>
-							</select>
-							<div class="error-block"></div>
+						    <label for="id_tahun_pelajaran" class="form-label">Tahun Pelajaran</label>
+						    <select class="form-control chainedSelect" data-target="tahun_pelajaran" id="id_tahun_pelajaran" name="id_tahun_pelajaran">
+						        <option value="">Pilih Tahun Pelajaran</option>
+						    </select>
+						    <div class="error-block"></div>
 						</div>
+
 						<div class="mb-1">
-							<label for="nama_jurusan" class="form-label">Nama Jurusan</label>
-							<input type="text" class="form-control" id="nama_jurusan" name="nama_jurusan" value="">
-							<div class="error-block"></div>
+						    <label for="nama_jurusan" class="form-label">Nama Jurusan</label>
+						    <input type="text" class="form-control" id="nama_jurusan" name="nama_jurusan">
+						    <div class="error-block"></div>
 						</div>
+
 					</form>
 
 					<div>
@@ -61,10 +63,15 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary saveBtn" data-target="jurusan" data-method="jurusan">Simpan</button>
+				<button type="button" class="btn btn-primary saveBtn" data-target="jurusan">Simpan</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script src="<?php echo base_url('public/lib/chainedSelect.js');?>"></script>
+
+
+
 

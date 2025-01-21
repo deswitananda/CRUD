@@ -12,14 +12,14 @@
     <div class="card-body">
         <div class="tab-content" id="custom-tabs-one-tabContent">
             <div class="tab-pane fade active show" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
-                <div class="btn btn-primary tambahBtn mb-2" data-method="seragam"> <i class="fas fa-plus"></i> Tambah</div>
+                <div class="btn btn-primary tambahBtn mb-2" data-target="seragam"> <i class="fas fa-plus"></i> Tambah</div>
                 <div class="row">
-                    <table class="table table-striped" id="table_seragam">
+                    <table class="table table-striped" id="table_seragam" data-target="seragam">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Jenis Seragam</th>
-                                <th>Aksi</th>
+                                <th data-key="no">No</th>
+                                <th data-key="nama_seragam">Nama Seragam</th>
+                                <th data-key="btn_aksi">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,17 +28,17 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
-                <div class="btn btn-primary tambahBtn mb-2" data-method="stok"> <i class="fas fa-plus"></i> Tambah</div>
+                <div class="btn btn-primary tambahBtn mb-2" data-target="stok"> <i class="fas fa-plus"></i> Tambah</div>
 				<div class="row">
-					<table class="table table-striped" id="table_stok">
+					<table class="table table-striped" id="table_stok" data-target="stok">
 						<thead>
 							<tr>
-								<th>No</th>
-								<th>Jenis Seragam</th>
-								<th>Tahun Pelajaran</th>
-								<th>Ukuran</th>
-								<th>Stok</th>
-								<th>Aksi</th>
+								<th data-key="no">No</th>
+								<th data-key="nama_seragam">Nama Seragam</th>
+								<th data-key="nama_tahun_pelajaran">Tahun Pelajaran</th>
+								<th data-key="ukuran">Ukuran</th>
+								<th data-key="stok">Stok</th>
+								<th data-key="btn_aksi">Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -73,7 +73,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary saveBtn" data-target="seragam" data-method="seragam">Simpan</button>
+				<button type="button" class="btn btn-success saveBtn" data-target="seragam">Simpan</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 			</div>
 		</div>
@@ -96,21 +96,27 @@
 						<input type="hidden" class="form-control" id="id" name="id" value="">
 						<div class="mb-1">
 							<label for="id_seragam" class="form-label">Nama Seragam</label>
-							<select class="form-control" name="id_seragam" id="id_seragam">
+							<select class="form-control chainedSelect" data-target="seragam" name="id_seragam" id="id_seragam">
 								<option value="">- Pilih Seragam -</option>
 							</select>
 							<div class="error-block"></div>
 						</div>
 						<div class="mb-1">
 							<label for="id_tahun_pelajaran" class="form-label">Tahun Pelajaran</label>
-							<select class="form-control" name="id_tahun_pelajaran" id="id_tahun_pelajaran">
+							<select class="form-control chainedSelect" data-target="tahun_pelajaran" name="id_tahun_pelajaran" id="id_tahun_pelajaran">
 								<option value="">- Pilih Tahun Pelajaran -</option>
 							</select>
 							<div class="error-block"></div>
 						</div>
 						<div class="mb-1">
 							<label for="ukuran" class="form-label">Ukuran</label>
-							<input type="text" class="form-control" id="ukuran" name="ukuran" value="">
+							<select class="form-control" id="ukuran" name="ukuran">
+								<option value="">Pilih Ukuran</option>
+								<option value="S">S</option>
+								<option value="M">M</option>
+								<option value="L">L</option>
+								<option value="XL">XL</option>
+							</select>
 							<div class="error-block"></div>
 						</div>
             			<div class="mb-1">
@@ -122,10 +128,11 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary saveBtn"  data-target="seragam" data-method="stok">Simpan</button>
+				<button type="button" class="btn btn-success saveBtn" data-target="stok">Simpan</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 			</div>
 		</div>
 	</div>
 </div>
 
+<script src="<?php echo base_url('public/lib/chainedSelect.js');?>"></script>

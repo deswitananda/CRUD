@@ -15,43 +15,41 @@
 		</p>
 	</a>
 	<ul class="nav nav-treeview">
-		<li class="nav-item">
+		<li class="nav-item menu">
 			<a href="<?php echo base_url('tahun_pelajaran') ?>" class="nav-link ">
 				<i class="far fa-circle nav-icon"></i>
 				<p>Data Tahun Pelajaran</p>
 			</a>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item menu">
 			<a href="<?php echo base_url('jurusan') ?>" class="nav-link ">
 				<i class="far fa-circle nav-icon"></i>
 				<p>Data Jurusan</p>
 			</a>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item menu">
 			<a href="<?php echo base_url('kelas') ?>" class="nav-link ">
 				<i class="far fa-circle nav-icon"></i>
 				<p>Data Kelas</p>
 			</a>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item menu">
 			<a href="<?php echo base_url('biaya') ?>" class="nav-link ">
 				<i class="far fa-circle nav-icon"></i>
 				<p>Data Biaya</p>
 			</a>
 		</li>
-		<li class="nav-item">
-            <a href="<?php echo base_url('seragam') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Data Seragam</p>
-            </a>
+		<li class="nav-item menu">
+			<a href="<?php echo base_url('seragam') ?>" class="nav-link ">
+				<i class="far fa-circle nav-icon"></i>
+				<p>Data Seragam</p>
+			</a>
 		</li>
-
 	</ul>
 </li>
-
 <li class="nav-item ">
-	<a href="<?php echo base_url('pendaftaran')?>" class="nav-link ">
-		<i class="nav-icon fas fa-address-card"></i>
+	<a href="#" class="nav-link ">
+		<i class="nav-icon fas fa-copy"></i>
 		<p>
 			Pendaftaran
 			<i class="right fas fa-angle-left"></i>
@@ -77,19 +75,10 @@
 			</a>
 		</li>
 	</ul>
-</li>	
-
-<li class="nav-item">
-	<a href="<?php echo base_url('user_akun') ?>" class="nav-link">
-		<i class="nav-icon fas fa-users "></i>
-		<p>
-			Akun Pengguna
-		</p>
-	</a>
 </li>
 
-<li class="nav-item">
-	<a href="<?php echo base_url('login/logout') ?>" class="nav-link">
+<li class="nav-item"  id="logoutBtn">
+	<a href="" class="nav-link">
 		<i class="nav-icon fas fa-sign-out-alt"></i>
 		<p>
 			Keluar

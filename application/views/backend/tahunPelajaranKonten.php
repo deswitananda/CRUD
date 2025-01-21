@@ -5,17 +5,17 @@
 				<h3 class="card-title">Tahun Pelajaran</h3>
 			</div>
 			<div class="card-body">
-				<div class="btn btn-primary tambahBtn mb-2" data-method="tahun_pelajaran"> <i class="fas fa-plus"></i> Tambah</div>
+				<div class="btn btn-primary tambahBtn mb-2" data-target="tahun_pelajaran"> <i class="fas fa-plus"></i> Tambah</div>
 				<div class="row">
-					<table class="table table-striped" id="table_tahun_pelajaran">
+					<table class="table table-striped" id="table_tahun_pelajaran" data-target="tahun_pelajaran">
 						<thead>
 							<tr>
-								<th>No</th>
-								<th>Tahun Pelajaran</th>
-								<th>Mulai</th>
-								<th>Akhir</th>
-								<th>Status</th>
-								<th>Aksi</th>
+								<th data-key="no">No</th>
+								<th data-key="nama_tahun_pelajaran">Tahun Pelajaran</th>
+								<th data-key="tanggal_mulai">Mulai</th>
+								<th data-key="tanggal_akhir">Akhir</th>
+								<th data-key="status_tahun_pelajaran">Status</th>
+								<th data-key="btn_aksi">Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -43,7 +43,7 @@
 						<input type="hidden" class="form-control" id="id" name="id" value="">
 						<div class="mb-1">
 							<label for="nama_tahun_pelajaran" class="form-label">Nama Tahun Pelajaran</label>
-							<input type="text" class="form-control" id="nama_tahun_pelajaran" name="nama_tahun_pelajaran" value="">
+							<input type="text" class="form-control" id="nama_tahun_pelajaran" name="nama_tahun_pelajaran" placeholder="Contoh: 2024-2025" value="">
 							<div class="error-block"></div>
 						</div>
 						<div class="mb-1">
@@ -59,6 +59,7 @@
 						<div class="mb-1">
 						<label for="status_tahun_pelajaran" class="form-label">Status</label>
 							<select class="form-control" id="status_tahun_pelajaran" name="status_tahun_pelajaran">
+								<option value="">Pilih Status</option>
 								<option value="1">Aktif</option>
 								<option value="0">Tidak Aktif</option>
 							</select>
@@ -68,10 +69,9 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary saveBtn" data-target="tahun_pelajaran" data-method="tahun_pelajaran">Simpan</button>
+				<button type="button" class="btn btn-success saveBtn" data-target="tahun_pelajaran">Simpan</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 			</div>
 		</div>
 	</div>
 </div>
-

@@ -14,13 +14,14 @@ class Masterdata_model extends CI_Model
 
 	protected $table = 'user';
 
-	public function __construct(){
+	public function __construct()
+	{
 		parent::__construct();
 	}
 
 
-	// Data Tahun Pelajaran
-	public function getAllTahunPelajaran(){
+	public function getAllTahunPelajaran()
+	{
 		return  $this->db->get($this->tableTahunPelajaran);
 	}
 
@@ -29,12 +30,14 @@ class Masterdata_model extends CI_Model
 		return  $this->db->get($this->tableTahunPelajaran);
 	}
 
-	public function getNamaTahunPelajaran($nama_tahun_pelajaran){
+	public function getNamaTahunPelajaran($nama_tahun_pelajaran)
+	{
 		$q = $this->db->where('nama_tahun_pelajaran', $nama_tahun_pelajaran)->get($this->tableTahunPelajaran);
 		return $q;
 	}
 
 	public function getTahunPelajaranByID($id = null){
+
 		return $this->db->where('id', $id)->get($this->tableTahunPelajaran);
 	}
 
@@ -42,36 +45,40 @@ class Masterdata_model extends CI_Model
 		if($id){
 			$this->db->where('id !=', $id);
 		}
+		$this->db->where('deleted_at', 0);
 		$this->db->where('nama_tahun_pelajaran', $nama_tahun_pelajaran);
 		return $this->db->get($this->tableTahunPelajaran);
 	}
 	
-	public function deleteTahunPelajaran($id){
-		$data = ['deleted_at' => date('Y-m-d H:i:s')];
+	public function deleteTahunPelajaran($id = null)
+	{
+		$this->db->where('id', $id);
+		$this->db->delete($this->tableTahunPelajaran);
+		return $this->db->affected_rows();
+	}
+
+	public function updateTahunPelajaran($id, $data)
+	{
 		$this->db->where('id', $id);
 		$this->db->update($this->tableTahunPelajaran, $data);
 		return $this->db->affected_rows();
 	}
 
-	public function updateTahunPelajaran($id, $data){
-		$this->db->where('id', $id);
-		$this->db->update($this->tableTahunPelajaran, $data);
-		return $this->db->affected_rows();
-	}
-
-	public function insertTahunPelajaran($data){
+	public function insertTahunPelajaran($data)
+	{
 		$this->db->insert($this->tableTahunPelajaran, $data);
 		return $this->db->insert_id();
 	}
 
 
 
-	// data jurusan
+
 	public function getAllJurusan() {
 		return  $this->db->get($this->tableJurusan);
 	}
 	
 	public function getJurusanByID($id = null){
+
 		$this->db->where('id', $id);
 		return $this->db->get($this->tableJurusan);
 	}
@@ -93,24 +100,28 @@ class Masterdata_model extends CI_Model
 		return $this->db->get($this->tableJurusan);
 	}
 
-	public function updateJurusan($id, $data){
+	public function updateJurusan($id, $data)
+	{
 		$this->db->where('id', $id);
 		$this->db->update($this->tableJurusan, $data);
 		return $this->db->affected_rows();
 	}
 
-	public function insertJurusan($data){
+	public function insertJurusan($data)
+	{
 		$this->db->insert($this->tableJurusan, $data);
 		return $this->db->insert_id();
 	}
 
 
 	//Data Kelas
+
 	public function getAllKelas() {
 		return  $this->db->get($this->tableKelas);
 	}
 
 	public function getKelasByID($id){
+		
 		$this->db->where($this->tableKelas . '.id', $id);
 		return $this->db->get($this->tableKelas);
 	}
@@ -124,7 +135,7 @@ class Masterdata_model extends CI_Model
 	}
 
 	public function getJurusanByTahunPelajaranID($id){
-		$this->db->where($this->tableJurusan . '.deleted_at', 0);
+		$this->db->where('deleted_at', 0);
 		$this->db->where('id_tahun_pelajaran', $id);
 		return $this->db->get($this->tableJurusan);
 	}
@@ -139,24 +150,20 @@ class Masterdata_model extends CI_Model
 		return $this->db->get($this->tableKelas);
 	}
 
-	public function updateKelas($id, $data){
+	
+
+	public function updateKelas($id, $data)
+	{
 		$this->db->where('id', $id);
 		$this->db->update($this->tableKelas, $data);
 		return $this->db->affected_rows();
 	}
 
-	public function saveKelas($data){
+	public function insertKelas($data)
+	{
 		$this->db->insert($this->tableKelas, $data);
 		return $this->db->insert_id();
 	}
-
-	public function deleteKelas($id){
-		$data = ['deleted_at' => date('Y-m-d H:i:s')];
-		$this->db->where('id', $id);
-		$this->db->update($this->tableKelas, $data);
-		return $this->db->affected_rows();
-	}
-	
 
 	// Data Biaya
 	public function getAllBiayaNotDeleted(){
@@ -184,6 +191,7 @@ class Masterdata_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
+
 	public function insertBiaya($data){
 		$this->db->insert($this->tableBiaya, $data);
 		return $this->db->insert_id();
@@ -192,6 +200,7 @@ class Masterdata_model extends CI_Model
 
 	
 	// data harga biaya
+
 	public function getAllHargaBiaya(){
 		$this->db->select($this->tableHargaBiaya . '.*, ' . $this->tableBiaya . '.nama_biaya ,' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran');
 		$this->db->join($this->tableBiaya, $this->tableBiaya . '.id = ' . $this->tableHargaBiaya . '.id_biaya', 'left');
@@ -220,12 +229,14 @@ class Masterdata_model extends CI_Model
 		return $this->db->get($this->tableHargaBiaya);
 	}
 
-	public function insertHargaBiaya($data){
+	public function insertHargaBiaya($data)
+	{
 		$this->db->insert($this->tableHargaBiaya, $data);
 		return $this->db->insert_id();
 	}
 
-	public function updateHargaBiaya($id, $data){
+	public function updateHargaBiaya($id, $data)
+	{
 		$this->db->where('id', $id);
 		$this->db->update($this->tableHargaBiaya, $data);
 		return $this->db->affected_rows();
@@ -262,9 +273,13 @@ class Masterdata_model extends CI_Model
 		$this->db->insert($this->tableSeragam, $data);
 		return $this->db->insert_id();
 	}
+	
 
+
+	
 
 	//data stok
+	
 	public function getAllStokNotDeleted(){
 		$this->db->select($this->tableStok . '.*, ' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran, ' . $this->tableSeragam . '.nama_seragam,');
 		$this->db->join($this->tableSeragam, $this->tableSeragam . '.id = ' . $this->tableStok . '.id_seragam');
@@ -296,6 +311,7 @@ class Masterdata_model extends CI_Model
 	}
 
 	public function getStokByID($id){
+		
 		$this->db->where($this->tableStok . '.id', $id);
 		return $this->db->get($this->tableStok);
 	}
@@ -333,5 +349,6 @@ class Masterdata_model extends CI_Model
 		return $this->db->insert_id();
 	}
 	
+
 
 }
