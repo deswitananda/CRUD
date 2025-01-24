@@ -54,7 +54,7 @@ class Seragam extends CI_Controller
 			'deleted_at' => 0
 		);
 
-		$this->form_validation->set_rules('nama_seragam', 'Nama Seragam', 'trim|required|alpha_numeric_space', array('required' => '%s harus diisi', 'alpha_numeric_space' => '%s hanya boleh mengandung huruf, angka dan spasi'));
+		$this->form_validation->set_rules('nama_seragam', 'Nama Seragam', 'trim|required', array('required' => '%s harus diisi'));
 
 		if ($this->form_validation->run() == FALSE) {
 			$ret['status'] = false;

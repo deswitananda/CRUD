@@ -20,7 +20,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<script src="<?php echo base_url('public/template/plugins/jquery/jquery.min.js'); ?>"></script>
     <!-- jQuery -->
 	<script src="<?php echo base_url('public/lib/crud.js'); ?>"></script>
+	<!-- <script src="<?php echo base_url('public/template/lib/chainedSelect.js'); ?>"></script> -->
+
+	<!-- <script src="<?php echo base_url(); ?>public/template/plugins/dataTables.bootstrap4.min.js"></script>
+	<script src="<?php echo base_url(); ?>public/template/plugins/dataTables-bs4/js/dataTables.bootsrap4.min.js"></script> -->
 	<script>
+
 		var baseUrl = '<?php echo base_url(); ?>';
 		var currentClass = '<?php echo $this->router->fetch_class(); ?>';
 		var baseClass = baseUrl + currentClass;
