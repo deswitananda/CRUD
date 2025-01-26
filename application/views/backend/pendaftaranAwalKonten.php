@@ -1,295 +1,602 @@
-<div class="btn btn-secondary tambahBtn mb-2" data-target="pendaftaran_awal">
-    <i class="fas fa-plus"></i> Add
-</div>
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h3 class="card-title">Pendaftaran Awal</h3>
+			</div>
+			<div class="card-body">
+				<div class="btn btn-secondary btnRefresh mb-2" data-target="pendaftaran_awal"> <i class="fas fa-sync"></i> Refresh</div>
+				<div class="btn btn-primary tambahBtn mb-2" data-target="pendaftaran_awal"> <i class="fas fa-plus"></i> Tambah</div>
+				<div class="">
+					<table class="table table-striped nowrap" width="100%" id="table_pendaftaran_awal" data-target="pendaftaran_awal">
+						<thead class="text-sm">
+							<tr>
+								<th><input type="checkbox" id="check-all"></th>
+								<th data-key="no">No</th>
+								<th data-key="no_pendaftaran">Nomor Pendaftaran</th>
+								<th data-key="nama_siswa">Nama Siswa</th>
+								<th data-key="jenis_kelamin">Jenis Kelamin</th>
+								<th data-key="asal_sekolah">Asal Sekolah</th>
+								<th data-key="email">Email</th>
+								<th data-key="no_telepon">No Telepon</th>
+								<th data-key="nama_ayah" >Nama Orang Tua</th>
+								<th data-key="no_telepon_ayah">No Orang Tua</th>
+								<th data-key="btn_pendaftaran">Aksi</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+		</div>
+  		
 
-<div class="card card-gray card-tabs">
-    <div class="card-header p-0 pt-1">
-        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">
-                    Data Kelas
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">
-                    Data Siswa
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="custom-tabs-one-parents-tab" data-toggle="pill" href="#custom-tabs-one-parents" role="tab" aria-controls="custom-tabs-one-parents" aria-selected="false">
-                    Data Orang Tua
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="card-body">
-        <div class="tab-content" id="custom-tabs-one-tabContent">
-            <!-- Awal Pendaftaran -->
-            <div class="tab-pane fade active show" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
-                <div class="row">
-                    <table class="table table-striped table-bordered" id="table_pendaftaran_awal" data-target="pendaftaran_awal">
-                        <thead>
-                            <tr>
-                                <th data-key="no">No</th>
-                                <th data-key="no_pendaftaran">No. Pendaftaran</th>
-                                <th data-key="nama_tahun_pelajaran">Tahun Pelajaran</th>
-                                <th data-key="nama_jurusan">Nama Jurusan</th>
-                                <th data-key="nama_kelas">Nama Kelas</th>
-                                <th data-key="btn_aksi">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Data Siswa -->
-            <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab" data-target="pendaftaran_awal">
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered" id="table_siswa" data-target="siswa">
-                            <thead>
-                                <tr>
-                                    <th data-key="no">No</th>
-                                    <th data-key="nama_siswa">Nama Siswa</th>
-                                    <th data-key="nik">NIK</th>
-                                    <th data-key="agama">Agama</th>
-                                    <th data-key="nisn">NISN</th>
-                                    <th data-key="jenis_kelamin">Jenis Kelamin</th>
-                                    <th data-key="tempat_lahir">Tempat Lahir</th>
-                                    <th data-key="tanggal_lahir">Tanggal Lahir</th>
-                                    <th data-key="no_telepon_siswa">Nomor Telepon</th>
-                                    <th data-key="asal_sekolah">Asal Sekolah</th>
-                                    <th data-key="email">Email</th>
-                                    <!-- <th data-key="btn_aksi">Aksi</th> -->
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Data Orang Tua -->
-            <div class="tab-pane fade" id="custom-tabs-one-parents" role="tabpanel" aria-labelledby="custom-tabs-one-parents-tab">
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered" id="table_orangtua" data-target="orangtua">
-                            <thead>
-                                <tr>
-                                    <th data-key="no">No</th>
-                                    <th data-key="nama_ayah">Nama Ayah</th>
-                                    <th data-key="nama_ibu">Nama Ibu</th>
-                                    <th data-key="no_telepon_ayah">No Telepon Ayah</th>
-                                    <th data-key="no_telepon_ibu">No Telepon Ibu</th>
-                                    <th data-key="pekerjaan_ayah">Pekerjaan Ayah</th>
-                                    <th data-key="pekerjaan_ibu">Pekerjaan Ibu</th>
-                                    <th data-key="nama_wali">Nama Wali</th>
-                                    <th data-key="no_telepon_wali">Nomor Telepon Wali</th>
-                                    <th data-key="pekerjaan_wali">Pekerjaan Wali</th>
-                                    <th data-key="alamat_orang_tua">Alamat</th>
-                                    <th data-key="sumber_informasi">Sumber Informasi</th>
-                                    <!-- <th data-key="btn_aksi">Aksi</th> -->
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Pendaftaran Awal -->
-<div class="modal" id="modal_pendaftaran_awal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Pendaftaran Awal</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <form id="form_pendaftaran_awal" action="#" method="post" enctype="multipart/form-data">
-                    <!-- A. Data Kelas -->
-                    <div class="card-header bg-secondary text-dark mb-2">
-                        <h3 class="card-title">A. Data Kelas</h3>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="no_pendaftaran">No. Pendaftaran</label>
-                            <input type="text" class="form-control" id="no_pendaftaran" name="no_pendaftaran" readonly>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="id_tahun_pelajaran">Tahun Pelajaran</label>
-                            <select class="form-control chainedSelect" data-target="tahun_pelajaran" name="id_tahun_pelajaran" id="id_tahun_pelajaran">
-                                <option value="">- Pilih Tahun Pelajaran -</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="id_jurusan">Nama Jurusan</label>
-                            <select class="form-control chainedSelect" data-parent="id_tahun_pelajaran" data-target="jurusan" name="id_jurusan" id="id_jurusan">
-                                <option value="">- Pilih Jurusan -</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="id_kelas">Nama Kelas</label>
-                            <select class="form-control chainedSelect" data-parent="id_jurusan" data-target="kelas" name="id_kelas" id="id_kelas">
-                                <option value="">- Pilih Kelas -</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- B. Data Siswa -->
-                    <div class="card-header bg-secondary text-dark mb-2">
-                        <h3 class="card-title">B. Data Siswa</h3>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="nama_siswa">Nama Siswa</label>
-                            <input type="text" class="form-control" id="nama_siswa" name="nama_siswa" required>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="nik">NIK</label>
-                            <input type="text" class="form-control" id="nik" name="nik" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="agama">Agama</label>
-                            <select class="form-control" id="agama" name="agama">
-                                <option value="">- Pilih Agama -</option>
-                                <option value="Islam">Islam</option>
-                                <option value="Katolik">Katolik</option>
-                                <option value="Protestan">Protestan</option>
-                                <option value="Budha">Budha</option>
-                                <option value="Hindu">Hindu</option>
-                                <option value="Konghucu">Konghucu</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="nisn">NISN</label>
-                            <input type="text" class="form-control" id="nisn" name="nisn">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="jenis_kelamin">Jenis Kelamin</label>
-                            <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
-                                <option value="">Pilih Jenis Kelamin</option>
-                                <option value="L">Laki-laki</option>
-                                <option value="P">Perempuan</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="tempat_lahir">Tempat Lahir</label>
-                            <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="tanggal_lahir">Tanggal Lahir</label>
-                            <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="no_telepon_siswa">No. Telepon Siswa</label>
-                            <input type="text" class="form-control" id="no_telepon_siswa" name="no_telepon_siswa">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="asal_sekolah">Asal Sekolah</label>
-                            <input type="text" class="form-control" id="asal_sekolah" name="asal_sekolah">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email">
-                        </div>
-                    </div>
-
-                    <!-- C. Data Orang Tua -->
-                    <div class="card-header bg-secondary text-dark mb-2">
-                        <h3 class="card-title">C. Data Orang Tua</h3>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="nama_ayah">Nama Ayah</label>
-                            <input type="text" class="form-control" id="nama_ayah" name="nama_ayah">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="nama_ibu">Nama Ibu</label>
-                            <input type="text" class="form-control" id="nama_ibu" name="nama_ibu">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="no_telepon_ayah">No. Telepon Ayah</label>
-                            <input type="text" class="form-control" id="no_telepon_ayah" name="no_telepon_ayah">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="no_telepon_ibu">No. Telepon Ibu</label>
-                            <input type="text" class="form-control" id="no_telepon_ibu" name="no_telepon_ibu">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="pekerjaan_ayah">Pekerjaan Ayah</label>
-                            <input type="text" class="form-control" id="pekerjaan_ayah" name="pekerjaan_ayah">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="pekerjaan_ibu">Pekerjaan Ibu</label>
-                            <input type="text" class="form-control" id="pekerjaan_ibu" name="pekerjaan_ibu">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="nama_wali">Nama Wali</label>
-                            <input type="text" class="form-control" id="nama_wali" name="nama_wali">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="no_telepon_wali">No. Telepon Wali</label>
-                            <input type="text" class="form-control" id="no_telepon_wali" name="no_telepon_wali">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="pekerjaan_wali">Pekerjaan Wali</label>
-                            <input type="text" class="form-control" id="pekerjaan_wali" name="pekerjaan_wali">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="alamat_orang_tua">Alamat</label>
-                            <textarea class="form-control" id="alamat_orang_tua" name="alamat_orang_tua"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="sumber_informasi">Sumber Informasi</label>
-                            <input type="text" class="form-control" id="sumber_informasi" name="sumber_informasi">
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary saveBtn" data-target="pendaftaran_awal">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	</div>
 </div>
 
 
- <script src="<?php echo base_url('public/lib/chainedSelect.js');?>"></script>
+<div class="modal" id="modal_pendaftaran_awal" tabindex="-2" role="dialog">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content modal-info">
+			<div class="modal-header">
+				<h5 class="modal-title">Form Pendaftaran Awal</h5>
+
+				<button type="button" class="close " data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" id="form_pendaftaran_awal"  action="#" method="post" enctype="multipart/form-data">
+				<div class="card card-info mt-2">
+					<div class="card-header">
+						<h3 class="card-title">Data Kelas</h3>
+					</div>
+				
+					<div class="form-user my-3 mx-3">
+
+							<input type="hidden" class="form-control" id="id" name="id" value="">
+							<div class="form-group row">
+								<label for="no_pendaftaran" class="form-label col-sm-3">Nomor Pendaftaran</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="no_pendaftaran" name="no_pendaftaran" value="" readonly>
+									<div class="text-danger"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="id_tahun_pelajaran" class="form-label col-sm-3">Nama Tahun Pelajaran</label>
+								<div class="col-sm-9">
+									<select class="form-control loadSelect chainedSelect" data-target="tahun_pelajaran"  name="id_tahun_pelajaran" id="id_tahun_pelajaran" required>
+										<option value="">Pilih</option>
+									</select>
+									<div class="text-danger"></div>
+								</div>
+								
+							</div>
+							<div class="form-group row">
+								<label for="id_jurusan" class="form-label col-sm-3">Nama Jurusan</label>
+								<div class="col-sm-9">
+									<select class="form-control chainedSelect" data-parent="id_tahun_pelajaran" data-target="jurusan" name="id_jurusan" id="id_jurusan">
+										<option value="">Pilih</option>
+									</select>
+									<div class="text-danger"></div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="id_kelas" class="form-label col-sm-3">Nama Kelas</label>
+								<div class="col-sm-9">
+									<select class="form-control chainedSelect" data-parent="id_jurusan" data-target="kelas" name="id_kelas" id="id_kelas">
+										<option value="">Pilih</option>
+									</select>
+									<div class="text-danger"></div>
+								</div>
+								
+							</div>
+					</div>
+				</div>
+
+				<div class="card card-info mt-2">
+					<div class="card-header">
+						<h3 class="card-title">Data Siswa</h3>
+					</div>
+				
+					<div class="form-user my-3 mx-3">
+<!-- 
+						<input type="hidden" class="form-control" id="id" name="id" value=""> -->
+						<div class="row">
+							<!-- Kolom Kiri -->
+							<div class="col-sm-6">
+								<div class="form-group row">
+									<label for="nama_siswa" class="form-label col-sm-4">Nama</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="">
+										<div class="text-danger"></div>
+									</div>
+									
+								</div>
+								<div class="form-group row">
+									<label for="nik" class="form-label col-sm-4">NIK</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="nik" name="nik" value="">
+										<div class="text-danger"></div>
+									</div>
+									
+								</div>
+								<div class="form-group row">
+									<label for="agama" class="form-label col-sm-4">Agama</label>
+									<div class="col-sm-8">
+										<select class="form-control" name="agama" id="agama">
+											<option value="">Pilih</option>
+											<option value="Islam">Islam</option>
+											<option value="Kristen Protestan">Kristen Protestan</option>
+											<option value="Katolik">Katolik</option>
+											<option value="Khonghucu">Khonghucu</option>
+											<option value="Hindu">Hindu</option>
+											<option value="Budha">Budha</option>
+										</select>
+										<div class="text-danger"></div>
+									</div>
+									
+								</div>
+								<div class="form-group row">
+									<label for="nisn" class="form-label col-sm-4">NISN</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="nisn" name="nisn" value="">
+										<div class="text-danger"></div>
+									</div>
+									
+								</div>
+								<div class="form-group row">
+									<label for="jenis_kelamin" class="form-label col-sm-4">Jenis Kelamin</label>
+									<div class="col-sm-8">
+										<select class="form-control" name="jenis_kelamin" id="jenis_kelamin">
+											<option value="">Pilih</option>
+											<option value="Laki-laki">Laki-laki</option>
+											<option value="Perempuan">Perempuan</option>
+										</select>
+										<div class="text-danger"></div>
+									</div>
+									
+								</div>
+								<div class="form-group row">
+									<label for="alamat" class="form-label col-sm-4">Alamat</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="alamat" name="alamat" value="">
+										<div class="text-danger"></div>
+									</div>
+									
+								</div>
+							</div>
+
+							<!-- Kolom Kanan -->
+							<div class="col-sm-6">
+								<div class="form-group row">
+									<label for="tempat_lahir" class="form-label col-sm-4">Tempat Lahir</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="">
+										<div class="text-danger"></div>
+									</div>
+									
+								</div>
+								<div class="form-group row">
+									<label for="tanggal_lahir" class="form-label col-sm-4">Tanggal Lahir</label>
+									<div class="col-sm-8">
+										<input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" placeholder="Contoh: 2003-05-08" value="">
+										<div class="text-danger"></div>
+									</div>
+									
+								</div>
+								<div class="form-group row">
+									<label for="no_telepon" class="form-label col-sm-4">No Telepon</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="no_telepon" name="no_telepon" placeholder="Contoh: 081300000000" value="">
+										<div class="text-danger"></div>
+									</div>
+									
+								</div>
+								<div class="form-group row">
+									<label for="email" class="form-label col-sm-4">Email</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="email" name="email" placeholder="Contoh: example@gmail.com" value="">
+										<div class="text-danger"></div>
+									</div>
+									
+								</div>
+								<div class="form-group row">
+									<label for="asal_sekolah" class="form-label col-sm-4">Asal Sekolah</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="asal_sekolah" name="asal_sekolah" value="">
+										<div class="text-danger"></div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+				
+
+					</div>
+				</div>
+
+				<div class="card card-info mt-2">
+					<div class="card-header">
+						<h3 class="card-title">Data Orang Tua</h3>
+					</div>
+				
+					<div class="form-user my-3 mx-3">
+							<!-- <input type="hidden" class="form-control" id="id" name="id" value=""> -->
+							<div class="row">
+								<!-- Kolom Kiri -->
+								<div class="col-sm-6">
+									<div class="form-group row">
+										<label for="nama_ayah" class="form-label col-sm-4">Nama Ayah</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="nama_ayah" name="nama_ayah" value="">
+											<div class="text-danger"></div>
+										</div>
+										
+									</div>
+									<div class="form-group row">
+										<label for="no_telepon_ayah" class="form-label col-sm-4">No Telepon Ayah</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="no_telepon_ayah" name="no_telepon_ayah" placeholder="Contoh: 081300000000" value="">
+											<div class="text-danger"></div>
+										</div>
+										
+									</div>
+									<div class="form-group row">
+										<label for="pekerjaan_ayah" class="form-label col-sm-4">Pekerjaan Ayah</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="pekerjaan_ayah" name="pekerjaan_ayah" value="">
+											<div class="text-danger"></div>
+										</div>
+										
+									</div>
+									<div class="form-group row">
+										<label for="nama_ibu" class="form-label col-sm-4">Nama Ibu</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="nama_ibu" name="nama_ibu" value="">
+											<div class="text-danger"></div>
+										</div>
+										
+									</div>
+									<div class="form-group row">
+										<label for="no_telepon_ibu" class="form-label col-sm-4">No Telepon Ibu</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="no_telepon_ibu" name="no_telepon_ibu" placeholder="Contoh: 081300000000" value="">
+											<div class="text-danger"></div>
+										</div>
+										
+									</div>
+									<div class="form-group row">
+										<label for="pekerjaan_ibu" class="form-label col-sm-4">Pekerjaan Ibu</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="pekerjaan_ibu" name="pekerjaan_ibu" value="">
+											<div class="text-danger"></div>
+										</div>
+										
+									</div>
+								</div>
+
+								<!-- Kolom Kanan -->
+								<div class="col-sm-6">
+									<div class="form-group row">
+										<label for="nama_wali" class="form-label col-sm-4">Nama Wali</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="nama_wali" name="nama_wali" value="">
+											<div class="text-danger"></div>
+										</div>
+										
+									</div>
+									<div class="form-group row">
+										<label for="no_telepon_wali" class="form-label col-sm-4">No Telepon Wali</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="no_telepon_wali" name="no_telepon_wali" placeholder="Contoh: 081300000000" value="">
+											<div class="text-danger"></div>
+										</div>
+										
+									</div>
+									<div class="form-group row">
+										<label for="pekerjaan_wali" class="form-label col-sm-4">Pekerjaan Wali</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="pekerjaan_wali" name="pekerjaan_wali" value="">
+											<div class="text-danger"></div>
+										</div>
+										
+									</div>
+									<div class="form-group row">
+										<label for="alamat_wali" class="form-label col-sm-4">Alamat</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="alamat_wali" name="alamat_wali" value="">
+											<div class="text-danger"></div>
+										</div>
+										
+									</div>
+									<div class="form-group row">
+										<label for="sumber_informasi" class="form-label col-sm-4">Sumber Informasi</label>
+										<div class="col-sm-8">
+											<select class="form-control" name="sumber_informasi" id="informasi">
+												<option value="">Pilih</option>
+												<option value="Website">Website</option>
+												<option value="Sosial Media">Sosial Media</option>
+												<option value="Kerabat">Kerabat</option>
+												<option value="Spanduk">Spanduk</option>
+												<option value="Flayer">Flayer</option>
+												<option value="Acara Sekolah">Acara Sekolah</option>
+											</select>
+											<div class="text-danger"></div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						
+					</div>
+				</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary saveBtn" data-target="pendaftaran_awal">Simpan</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal" id="detailModal" tabindex="-2" role="dialog">
+	<div class="modal-dialog modal-xl" role="document">
+		<div class="modal-content modal-info">
+			<div class="modal-header">
+				<h5 class="modal-title">Form Pendaftaran Awal</h5>
+
+				<button type="button" class="close " data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" id="form_detail" action="#" method="post" enctype="multipart/form-data">
+				<div class="card card-info mt-2">
+					<div class="card-header">
+						<h3 class="card-title">Data Kelas</h3>
+					</div>
+				
+					<div class="form-user my-3 mx-3">
+
+							<input type="hidden" class="form-control" id="id" name="id" value="">
+							<div class="form-group row">
+								<label for="no_pendaftaran" class="form-label col-sm-3">Nomor Pendaftaran</label>
+								<div class="col-sm-9">
+								<input type="text" class="form-control " id="no_pendaftaran" name="no_pendaftaran" value="" readonly>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="id_tahun_pelajaran" class="form-label col-sm-3">Nama Tahun Pelajaran</label>
+								<div class="col-sm-9">
+								<select class="form-control chainedSelect" data-target="tahun_pelajaran"  name="id_tahun_pelajaran" id="id_tahun_pelajaran" disabled>
+									<option value="">- Pilih Tahun Pelajaran -</option>
+								</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="id_jurusan" class="form-label col-sm-3">Nama Jurusan</label>
+								<div class="col-sm-9">
+								<select class="form-control chainedSelect" data-parent="id_tahun_pelajaran" data-target="jurusan" name="id_jurusan" id="id_jurusan" disabled>
+									<option value="">- Pilih Jurusan -</option>
+								</select>
+								</div>
+							</div>
+							<div class="form-group row">
+							<label for="id_kelas" class="form-label col-sm-3">Nama Kelas</label>
+							<div class="col-sm-9">
+								<select class="form-control chainedSelect" data-parent="id_jurusan" data-target="kelas" name="id_kelas" id="id_kelas" disabled>
+									<option value="">- Pilih Kelas -</option>
+								</select>
+								</div>
+							</div>
+
+					</div>
+				</div>
+
+				<div class="card card-info mt-2">
+					<div class="card-header">
+						<h3 class="card-title">Data Siswa</h3>
+					</div>
+				
+					<div class="form-user my-3 mx-3">
+
+						<input type="hidden" class="form-control" id="id" name="id" value="">
+						<div class="row">
+							<!-- Kolom Kiri -->
+							<div class="col-sm-6">
+								<div class="form-group row">
+									<label for="nama_siswa" class="form-label col-sm-4">Nama</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="nama_siswa" name="nama_siswa" value="" readonly>
+									</div>
+
+								</div>
+								<div class="form-group row">
+									<label for="nik" class="form-label col-sm-4">NIK</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="nik" name="nik" value="" readonly>
+									</div>
+
+								</div>
+								<div class="form-group row">
+									<label for="agama" class="form-label col-sm-4">Agama</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="agama" name="agama" value="" readonly>
+									</div>
+
+								</div>
+								<div class="form-group row">
+									<label for="nisn" class="form-label col-sm-4">NISN</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="nisn" name="nisn" value="" readonly>
+									</div>
+
+								</div>
+								<div class="form-group row">
+									<label for="jenis_kelamin" class="form-label col-sm-4">Jenis Kelamin</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="jenis_kelamin" name="jenis_kelamin" value="" readonly>
+									</div>
+
+								</div>
+								<div class="form-group row">
+									<label for="alamat" class="form-label col-sm-4">Alamat</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="alamat" name="alamat" value="" readonly>
+									</div>
+
+								</div>
+							</div>
+
+							<!-- Kolom Kanan -->
+							<div class="col-sm-6">
+								<div class="form-group row">
+									<label for="tempat_lahir" class="form-label col-sm-4">Tempat Lahir</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="" readonly>
+									</div>
+
+								</div>
+								<div class="form-group row">
+									<label for="tanggal_lahir" class="form-label col-sm-4">Tanggal Lahir</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="" readonly>
+									</div>
+
+								</div>
+								<div class="form-group row">
+									<label for="no_telepon" class="form-label col-sm-4">No Telepon</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="no_telepon" name="no_telepon" value="" readonly>
+									</div>
+
+								</div>
+								<div class="form-group row">
+									<label for="email" class="form-label col-sm-4">Email</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="email" name="email" value="" readonly>
+									</div>
+
+								</div>
+								<div class="form-group row">
+									<label for="asal_sekolah" class="form-label col-sm-4">Asal Sekolah</label>
+									<div class="col-sm-8">
+										<input type="text" class="form-control" id="asal_sekolah" name="asal_sekolah" value="" readonly>
+									</div>
+
+								</div>
+							</div>
+						</div>
+				
+
+					</div>
+				</div>
+
+				<div class="card card-info mt-2">
+					<div class="card-header">
+						<h3 class="card-title">Data Orang Tua</h3>
+					</div>
+				
+					<div class="form-user my-3 mx-3">
+							<input type="hidden" class="form-control" id="id" name="id" value="" readonly>
+							<div class="row">
+								<!-- Kolom Kiri -->
+								<div class="col-sm-6">
+									<div class="form-group row">
+										<label for="nama_ayah" class="form-label col-sm-4">Nama Ayah</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="nama_ayah" name="nama_ayah" value="" readonly>
+										</div>
+	
+									</div>
+									<div class="form-group row">
+										<label for="no_telepon_ayah" class="form-label col-sm-4">No Telepon Ayah</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="no_telepon_ayah" name="no_telepon_ayah" value="" readonly>
+										</div>
+	
+									</div>
+									<div class="form-group row">
+										<label for="pekerjaan_ayah" class="form-label col-sm-4">Pekerjaan Ayah</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="pekerjaan_ayah" name="pekerjaan_ayah" value="" readonly>
+										</div>
+	
+									</div>
+									<div class="form-group row">
+										<label for="nama_ibu" class="form-label col-sm-4">Nama Ibu</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="nama_ibu" name="nama_ibu" value="" readonly>
+										</div>
+	
+									</div>
+									<div class="form-group row">
+										<label for="no_telepon_ibu" class="form-label col-sm-4">No Telepon Ibu</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="no_telepon_ibu" name="no_telepon_ibu" value="" readonly>
+										</div>
+	
+									</div>
+									<div class="form-group row">
+										<label for="pekerjaan_ibu" class="form-label col-sm-4">Pekerjaan Ibu</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="pekerjaan_ibu" name="pekerjaan_ibu" value="" readonly>
+										</div>
+	
+									</div>
+								</div>
+
+								<!-- Kolom Kanan -->
+								<div class="col-sm-6">
+									<div class="form-group row">
+										<label for="nama_wali" class="form-label col-sm-4">Nama Wali</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="nama_wali" name="nama_wali" value="" readonly>
+										</div>
+	
+									</div>
+									<div class="form-group row">
+										<label for="no_telepon_wali" class="form-label col-sm-4">No Telepon Wali</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="no_telepon_wali" name="no_telepon_wali" value="" readonly>
+										</div>
+	
+									</div>
+									<div class="form-group row">
+										<label for="pekerjaan_wali" class="form-label col-sm-4">Pekerjaan Wali</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="pekerjaan_wali" name="pekerjaan_wali" value="" readonly>
+										</div>
+	
+									</div>
+									<div class="form-group row">
+										<label for="alamat_wali" class="form-label col-sm-4">Alamat</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="alamat_wali" name="alamat_wali" value="" readonly>
+										</div>
+	
+									</div>
+									<div class="form-group row">
+										<label for="sumber_informasi" class="form-label col-sm-4">Sumber Informasi</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" id="sumber_informasi" name="sumber_informasi" value="" readonly>
+										</div>
+	
+									</div>
+								</div>
+							</div>
+						
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 
- 
+<script src="<?php echo base_url('public/lib/chainedSelect.js');?>"></script>

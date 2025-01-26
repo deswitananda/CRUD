@@ -5,11 +5,13 @@
 				<h3 class="card-title">Data Jurusan</h3>
 			</div>
 			<div class="card-body">
+				<div class="btn btn-secondary btnRefresh mb-2" data-target="jurusan"> <i class="fas fa-sync"></i> Refresh</div>
 				<div class="btn btn-primary tambahBtn mb-2" data-target="jurusan"> <i class="fas fa-plus"></i> Tambah</div>
-				<div class="row">
-					<table class="table table-striped" id="table_jurusan" data-target="jurusan">
-						<thead>
+				<div class="">
+					<table class="table table-striped" width="100%" id="table_jurusan" data-target="jurusan">
+						<thead class="text-sm">
 							<tr>
+								<th style="width: 10%"><input type="checkbox" id="check-all"></th>
 								<th data-key="no">No</th>
 								<th data-key="nama_tahun_pelajaran">Tahun Pelajaran</th>
                                 <th data-key="nama_jurusan">Nama Jurusan</th>
@@ -41,19 +43,17 @@
 						<input type="hidden" class="form-control" id="id" name="id" value="">
 
 						<div class="mb-1">
-						    <label for="id_tahun_pelajaran" class="form-label">Tahun Pelajaran</label>
-						    <select class="form-control chainedSelect" data-target="tahun_pelajaran" id="id_tahun_pelajaran" name="id_tahun_pelajaran">
-						        <option value="">Pilih Tahun Pelajaran</option>
-						    </select>
-						    <div class="error-block"></div>
+							<label for="nama_tahun_pelajaran" class="form-label">Tahun Pelajaran</label>
+							<select class="form-control loadSelect chainedSelect" data-target="tahun_pelajaran" id="id_tahun_pelajaran" name="id_tahun_pelajaran" value="">
+								<option value="">- Pilih Tahun Pelajaran -</option>
+							</select>
+							<div class="text-danger"></div>
 						</div>
-
 						<div class="mb-1">
-						    <label for="nama_jurusan" class="form-label">Nama Jurusan</label>
-						    <input type="text" class="form-control" id="nama_jurusan" name="nama_jurusan">
-						    <div class="error-block"></div>
+							<label for="nama_jurusan" class="form-label">- Nama Jurusan -</label>
+							<input type="text" class="form-control" id="nama_jurusan" name="nama_jurusan" value="">
+							<div class="text-danger"></div>
 						</div>
-
 					</form>
 
 					<div>

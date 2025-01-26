@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Masterdata_model extends CI_Model
+class Masterdata_model extends MY_Model
 {
 
 	protected $tableTahunPelajaran = 'data_tahun_pelajaran';
@@ -30,15 +30,34 @@ class Masterdata_model extends CI_Model
 		return  $this->db->get($this->tableTahunPelajaran);
 	}
 
-	public function getNamaTahunPelajaran($nama_tahun_pelajaran)
-	{
-		$q = $this->db->where('nama_tahun_pelajaran', $nama_tahun_pelajaran)->get($this->tableTahunPelajaran);
-		return $q;
+	public function dataTablesTahunPelajaran(){
+		$col_order 	= array($this->tableTahunPelajaran . '.id', $this->tableTahunPelajaran . '.nama_tahun_pelajaran');
+		$col_search = array($this->tableTahunPelajaran . '.id', $this->tableTahunPelajaran . '.nama_tahun_pelajaran');
+		$order 		= array($this->tableTahunPelajaran . '.id' => 'desc');
+		$filter 	= array($this->tableTahunPelajaran . '.deleted_at' => 0);
+		$group_by 	= null;
+		//$query = $this->tableTahunPelajaran;
+		$this->db->from($this->tableTahunPelajaran);
+		$this->db->select($this->tableTahunPelajaran . '.*');
+		$query = substr($this->db->get_compiled_select(), 6);
+		$data = $this->get_datatables($query, $col_order, $col_search, $order,  $filter, $group_by);
+
+		$recordTotal =  $this->countAllQueryFiltered($query, $filter);
+		$recordFiltered =  $this->count_filtered($query, $filter);
+		return array('data' => $data, 'recordTotal' => $recordTotal, 'recordFiltered' => $recordFiltered);
 	}
 
-	public function getTahunPelajaranByID($id = null){
 
-		return $this->db->where('id', $id)->get($this->tableTahunPelajaran);
+	public function getNamaTahunPelajaran($nama_tahun_pelajaran)
+	{
+		$this->db->where('nama_tahun_pelajaran', $nama_tahun_pelajaran);
+		return $this->db->get($this->tableTahunPelajaran);
+	}
+
+	public function getTahunPelajaranByID($id){
+		$this->db->where('id', $id);
+
+		return $this->db->get($this->tableTahunPelajaran);
 	}
 
 	public function cekTahunPelajaranDuplicate($nama_tahun_pelajaran, $id){
@@ -72,6 +91,24 @@ class Masterdata_model extends CI_Model
 
 
 
+
+	public function dataTablesJurusan(){
+		$col_order 	= array($this->tableJurusan . '.id', $this->tableJurusan . '.nama_jurusan');
+		$col_search = array($this->tableJurusan . '.id', $this->tableJurusan . '.nama_jurusan', $this->tableTahunPelajaran . '.nama_tahun_pelajaran');
+		$order 		= array($this->tableJurusan . '.id' => 'desc');
+		$filter 	= array($this->tableJurusan . '.deleted_at' => 0);
+		$group_by 	= null;
+		//$query = $this->tableTahunPelajaran;
+		$this->db->from($this->tableJurusan);
+		$this->db->select($this->tableJurusan . '.*, ' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran');
+		$this->db->join($this->tableTahunPelajaran, $this->tableTahunPelajaran . '.id = ' . $this->tableJurusan . '.id_tahun_pelajaran');
+		$query = substr($this->db->get_compiled_select(), 6);
+		$data = $this->get_datatables($query, $col_order, $col_search, $order,  $filter, $group_by);
+
+		$recordTotal =  $this->countAllQueryFiltered($query, $filter);
+		$recordFiltered =  $this->count_filtered($query, $filter);
+		return array('data' => $data, 'recordTotal' => $recordTotal, 'recordFiltered' => $recordFiltered);
+	}
 
 	public function getAllJurusan() {
 		return  $this->db->get($this->tableJurusan);
@@ -115,6 +152,25 @@ class Masterdata_model extends CI_Model
 
 
 	//Data Kelas
+	
+	public function dataTablesKelas(){
+		$col_order 	= array($this->tableKelas . '.id', $this->tableKelas . '.nama_kelas');
+		$col_search = array($this->tableKelas . '.id', $this->tableKelas . '.nama_kelas', $this->tableTahunPelajaran . '.nama_tahun_pelajaran', $this->tableJurusan . '.id', $this->tableJurusan . '.nama_jurusan');
+		$order 		= array($this->tableKelas . '.id' => 'desc');
+		$filter 	= array($this->tableKelas . '.deleted_at' => 0);
+		$group_by 	= null;
+		//$query = $this->tableTahunPelajaran;
+		$this->db->from($this->tableKelas);
+		$this->db->select($this->tableKelas . '.*, ' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran,' . $this->tableJurusan . '.nama_jurusan');
+		$this->db->join($this->tableJurusan, $this->tableJurusan . '.id = ' . $this->tableKelas . '.id_jurusan');
+		$this->db->join($this->tableTahunPelajaran, $this->tableTahunPelajaran . '.id = ' . $this->tableJurusan . '.id_tahun_pelajaran');
+		$query = substr($this->db->get_compiled_select(), 6);
+		$data = $this->get_datatables($query, $col_order, $col_search, $order,  $filter, $group_by);
+
+		$recordTotal =  $this->countAllQueryFiltered($query, $filter);
+		$recordFiltered =  $this->count_filtered($query, $filter);
+		return array('data' => $data, 'recordTotal' => $recordTotal, 'recordFiltered' => $recordFiltered);
+	}
 
 	public function getAllKelas() {
 		return  $this->db->get($this->tableKelas);
@@ -166,6 +222,24 @@ class Masterdata_model extends CI_Model
 	}
 
 	// Data Biaya
+
+	public function dataTablesBiaya(){
+		$col_order 	= array($this->tableBiaya . '.id', $this->tableBiaya . '.nama_biaya');
+		$col_search = array($this->tableBiaya . '.id', $this->tableBiaya . '.nama_biaya');
+		$order 		= array($this->tableBiaya . '.id' => 'desc');
+		$filter 	= array($this->tableBiaya . '.deleted_at' => 0);
+		$group_by 	= null;
+		//$query = $this->tableTahunPelajaran;
+		$this->db->from($this->tableBiaya);
+		$this->db->select($this->tableBiaya . '.*, ');
+		$query = substr($this->db->get_compiled_select(), 6);
+		$data = $this->get_datatables($query, $col_order, $col_search, $order,  $filter, $group_by);
+
+		$recordTotal =  $this->countAllQueryFiltered($query, $filter);
+		$recordFiltered =  $this->count_filtered($query, $filter);
+		return array('data' => $data, 'recordTotal' => $recordTotal, 'recordFiltered' => $recordFiltered);
+	}
+
 	public function getAllBiayaNotDeleted(){
 		$this->db->where('deleted_at', 0);
 		return  $this->db->get($this->tableBiaya);
@@ -200,6 +274,25 @@ class Masterdata_model extends CI_Model
 
 	
 	// data harga biaya
+
+	public function dataTablesHargaBiaya(){
+		$col_order 	= array($this->tableHargaBiaya . '.id', $this->tableHargaBiaya . '.id_biaya');
+		$col_search = array($this->tableHargaBiaya . '.id', $this->tableBiaya . '.nama_biaya', $this->tableHargaBiaya . '.harga');
+		$order 		= array($this->tableHargaBiaya . '.id' => 'desc');
+		$filter 	= array($this->tableHargaBiaya . '.deleted_at' => 0);
+		$group_by 	= null;
+		//$query = $this->tableTahunPelajaran;
+		$this->db->from($this->tableHargaBiaya);
+		$this->db->select($this->tableHargaBiaya . '.*, ' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran,' . $this->tableBiaya . '.nama_biaya,');
+		$this->db->join($this->tableBiaya, $this->tableBiaya . '.id = ' . $this->tableHargaBiaya . '.id_biaya', 'left');
+		$this->db->join($this->tableTahunPelajaran, $this->tableTahunPelajaran . '.id = ' . $this->tableHargaBiaya . '.id_tahun_pelajaran', 'left');
+		$query = substr($this->db->get_compiled_select(), 6);
+		$data = $this->get_datatables($query, $col_order, $col_search, $order,  $filter, $group_by);
+
+		$recordTotal =  $this->countAllQueryFiltered($query, $filter);
+		$recordFiltered =  $this->count_filtered($query, $filter);
+		return array('data' => $data, 'recordTotal' => $recordTotal, 'recordFiltered' => $recordFiltered);
+	}
 
 	public function getAllHargaBiaya(){
 		$this->db->select($this->tableHargaBiaya . '.*, ' . $this->tableBiaya . '.nama_biaya ,' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran');
@@ -244,6 +337,24 @@ class Masterdata_model extends CI_Model
 
 
 	// data seragam
+
+	public function dataTablesSeragam(){
+		$col_order 	= array($this->tableSeragam . '.id', $this->tableSeragam . '.nama_seragam');
+		$col_search = array($this->tableSeragam . '.id', $this->tableSeragam . '.nama_seragam');
+		$order 		= array($this->tableSeragam . '.id' => 'desc');
+		$filter 	= array($this->tableSeragam . '.deleted_at' => 0);
+		$group_by 	= null;
+		//$query = $this->tableTahunPelajaran;
+		$this->db->from($this->tableSeragam);
+		$this->db->select($this->tableSeragam . '.*, ');
+		$query = substr($this->db->get_compiled_select(), 6);
+		$data = $this->get_datatables($query, $col_order, $col_search, $order,  $filter, $group_by);
+
+		$recordTotal =  $this->countAllQueryFiltered($query, $filter);
+		$recordFiltered =  $this->count_filtered($query, $filter);
+		return array('data' => $data, 'recordTotal' => $recordTotal, 'recordFiltered' => $recordFiltered);
+	}
+
 	public function getAllSeragamNotDeleted(){
 		$this->db->where('deleted_at', 0);
 		return  $this->db->get($this->tableSeragam);
@@ -279,6 +390,25 @@ class Masterdata_model extends CI_Model
 	
 
 	//data stok
+
+	public function dataTablesStok(){
+		$col_order 	= array($this->tableStok . '.id', $this->tableStok . '.id_seragam');
+		$col_search = array($this->tableStok . '.id', $this->tableSeragam . '.nama_seragam');
+		$order 		= array($this->tableStok . '.id' => 'desc');
+		$filter 	= array($this->tableStok . '.deleted_at' => 0);
+		$group_by 	= null;
+		//$query = $this->tableTahunPelajaran;
+		$this->db->from($this->tableStok);
+		$this->db->select($this->tableStok . '.*, ' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran,' . $this->tableSeragam . '.nama_seragam');
+		$this->db->join($this->tableSeragam, $this->tableSeragam . '.id = ' . $this->tableStok . '.id_seragam');
+		$this->db->join($this->tableTahunPelajaran, $this->tableTahunPelajaran . '.id = ' . $this->tableStok . '.id_tahun_pelajaran');
+		$query = substr($this->db->get_compiled_select(), 6);
+		$data = $this->get_datatables($query, $col_order, $col_search, $order,  $filter, $group_by);
+
+		$recordTotal =  $this->countAllQueryFiltered($query, $filter);
+		$recordFiltered =  $this->count_filtered($query, $filter);
+		return array('data' => $data, 'recordTotal' => $recordTotal, 'recordFiltered' => $recordFiltered);
+	}
 	
 	public function getAllStokNotDeleted(){
 		$this->db->select($this->tableStok . '.*, ' . $this->tableTahunPelajaran . '.nama_tahun_pelajaran, ' . $this->tableSeragam . '.nama_seragam,');
@@ -318,7 +448,7 @@ class Masterdata_model extends CI_Model
 
 
 	//Data User
-	public function getAllUserNotDeleted(){
+	/* public function getAllUserNotDeleted(){
 		$this->db->where('deleted_at', 0);
 		return  $this->db->get($this->table);
 	}
@@ -347,7 +477,7 @@ class Masterdata_model extends CI_Model
 	public function insertUser($data){
 		$this->db->insert($this->table, $data);
 		return $this->db->insert_id();
-	}
+	} */
 	
 
 

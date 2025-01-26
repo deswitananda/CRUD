@@ -5,11 +5,13 @@
 				<h3 class="card-title">Data Kelas</h3>
 			</div>
 			<div class="card-body">
+				<div class="btn btn-secondary btnRefresh mb-2" data-target="kelas"> <i class="fas fa-sync"></i> Refresh</div>
 				<div class="btn btn-primary tambahBtn mb-2" data-target="kelas"> <i class="fas fa-plus"></i> Tambah</div>
-				<div class="row">
-					<table class="table table-striped" id="table_kelas" data-target="kelas">
-						<thead>
+				<div class="">
+					<table class="table table-striped" width="100%" id="table_kelas" data-target="kelas">
+						<thead class="text-sm">
 							<tr>
+								<th><input type="checkbox" id="check-all"></th>
 								<th data-key="no">No</th>
 								<th data-key="nama_tahun_pelajaran">Tahun Pelajaran</th>
 								<th data-key="nama_jurusan">Nama Jurusan</th>
@@ -43,22 +45,22 @@
 
 						<div class="mb-1">
 							<label for="id_tahun_pelajaran" class="form-label">Nama Tahun Pelajaran</label>
-							<select class="form-control  chainedSelect" data-target="tahun_pelajaran"  name="id_tahun_pelajaran" id="id_tahun_pelajaran">
+							<select class="form-control loadSelect chainedSelect" data-target="tahun_pelajaran"  name="id_tahun_pelajaran" id="id_tahun_pelajaran">
 								<option value="">- Pilih Tahun Pelajaran -</option>
 							</select>
-							<div class="error-block"></div>
+							<div class="text-danger"></div>
 						</div>
 						<div class="mb-1">
 							<label for="id_jurusan" class="form-label">Nama Jurusan</label>
-							<select class="form-control  chainedSelect" data-parent="id_tahun_pelajaran" data-target="jurusan" name="id_jurusan" id="id_jurusan">
+							<select class="form-control loadSelect chainedSelect" data-parent="id_tahun_pelajaran" data-target="jurusan" name="id_jurusan" id="id_jurusan">
 								<option value="">- Pilih Jurusan -</option>
 							</select>
-							<div class="error-block"></div>
+							<div class="text-danger"></div>
 						</div>
 						<div class="mb-1">
 							<label for="nama_kelas" class="form-label">Nama Kelas</label>
 							<input type="text" class="form-control" id="nama_kelas" name="nama_kelas" value="">
-							<div class="error-block"></div>
+							<div class="text-danger"></div>
 						</div>
 
 					</form>
@@ -77,5 +79,6 @@
 	</div>
 </div>
 
-
 <script src="<?php echo base_url('public/lib/chainedSelect.js');?>"></script>
+
+

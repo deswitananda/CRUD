@@ -8,6 +8,7 @@ class Tahun_pelajaran extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Masterdata_model', 'md');
+		$this->load->helper('actionbtn');
 	}
 
 	public function index()
@@ -24,24 +25,35 @@ class Tahun_pelajaran extends CI_Controller
 	public function table_tahun_pelajaran()
 	{
 
-		$q = $this->md->getAllTahunPelajaranNotDeleted();
-		$dt = [];
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-				$dt[] = $row;
-			}
+		$q = $this->md->dataTablesTahunPelajaran();
 
-			$ret['status'] = true;
-			$ret['data'] = $dt;
-			$ret['message'] = '';
-		} else {
-			$ret['status'] = false;
-			$ret['data'] = [];
-			$ret['message'] = 'Data tidak tersedia';
+		$data  = array();
+		$no    = $_POST['start'];
+		foreach ($q['data'] as $da) {
+			$no++;
+			$row   = array();
+			$row[] = '<input type="checkbox" class="data-check" value="' . $da->id . '">';
+			$row[] = $no;
+			$row[] = $da->nama_tahun_pelajaran;
+			$row[] = $da->tanggal_mulai == '0000-00-00' ? 'tanggal belum diisi' : date('d-m-Y', strtotime($da->tanggal_mulai));
+			$row[] = $da->tanggal_akhir;
+			$row[] = $da->status_tahun_pelajaran;
+			$row[] = actbtn($da->id, 'tahun_pelajaran');
+			$data[] = $row;
 		}
 
-		echo json_encode($ret);
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $q['recordTotal'],
+			"recordsFiltered" => $q['recordFiltered'],
+			"data" => $data,
+		);
+		//output to json format
+
+
+		echo json_encode($output);
 	}
+
 
 	public function edit_tahun_pelajaran()
 	{

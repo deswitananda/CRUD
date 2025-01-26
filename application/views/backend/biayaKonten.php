@@ -12,11 +12,13 @@
     <div class="card-body">
         <div class="tab-content" id="custom-tabs-one-tabContent">
             <div class="tab-pane fade active show" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+				<div class="btn btn-secondary btnRefresh mb-2" data-target="biaya"> <i class="fas fa-sync"></i> Refresh</div>
                 <div class="btn btn-primary tambahBtn mb-2" data-target="biaya"> <i class="fas fa-plus"></i> Tambah</div>
-                <div class="row">
-                    <table class="table table-striped" data-target="biaya"  id="table_biaya">
-                        <thead>
+                <div class="">
+                    <table class="table table-striped" width="100%" data-target="biaya"  id="table_biaya">
+                        <thead class="text-sm">
                             <tr>
+								<th><input type="checkbox" id="check-all"></th>
                                 <th data-key="no">No</th>
                                 <th data-key="nama_biaya">Nama Biaya</th>
                                 <th data-key="deskripsi">Deskripsi</th>
@@ -29,11 +31,13 @@
                 </div>
             </div>
             <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
-                <div class="btn btn-primary tambahBtn mb-2" data-target="harga_biaya"> <i class="fas fa-plus"></i> Tambah</div>
-				<div class="row">
-					<table class="table table-striped" data-target="harga_biaya" id="table_harga_biaya">
-						<thead>
+            <div class="btn btn-secondary btnRefresh mb-2" data-target="harga_biaya"> <i class="fas fa-sync"></i> Refresh</div>    
+			<div class="btn btn-primary tambahBtn mb-2" data-target="harga_biaya"> <i class="fas fa-plus"></i> Tambah</div>
+				<div class="">
+					<table class="table table-striped" width="100%" data-target="harga_biaya" id="table_harga_biaya">
+						<thead class="text-sm">
 							<tr>
+								<th><input type="checkbox" id="check-all"></th>
 								<th data-key="no">No</th>
 								<th data-key="nama_biaya">Nama Biaya</th>
 								<th data-key="nama_tahun_pelajaran">Tahun Pelajaran</th>
@@ -67,18 +71,18 @@
 						<div class="mb-1">
 							<label for="nama_biaya" class="form-label">Nama Biaya</label>
 							<input type="text" class="form-control" id="nama_biaya" name="nama_biaya" value="">
-							<div class="error-block"></div>
+							<div class="text-danger"></div>
 						</div>
 						<div class="mb-1">
 							<label for="deskripsi" class="form-label">Deskripsi</label>
 							<input type="text" class="form-control" id="deskripsi" name="deskripsi" value="">
-							<div class="error-block"></div>
+							<div class="text-danger"></div>
 						</div>
 					</form>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success saveBtn" data-target="biaya">Simpan</button>
+				<button type="button" class="btn btn-primary saveBtn" data-target="biaya">Simpan</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 			</div>
 		</div>
@@ -101,28 +105,28 @@
 						<input type="hidden" class="form-control" id="id" name="id" value="">
 						<div class="mb-1">
 							<label for="id_biaya" class="form-label">Nama Biaya</label>
-							<select class="form-control chainedSelect" data-target="biaya" name="id_biaya" id="id_biaya">
+							<select class="form-control loadSelect chainedSelect" data-target="biaya" name="id_biaya" id="id_biaya">
 								<option value="">- Pilih Biaya -</option>
 							</select>
-							<div class="error-block"></div>
+							<div class="text-danger"></div>
 						</div>
 						<div class="mb-1">
 							<label for="id_tahun_pelajaran" class="form-label">Tahun Pelajaran</label>
-							<select class="form-control chainedSelect" data-target="tahun_pelajaran" name="id_tahun_pelajaran" id="id_tahun_pelajaran">
+							<select class="form-control loadSelect chainedSelect" data-target="tahun_pelajaran" name="id_tahun_pelajaran" id="id_tahun_pelajaran">
 								<option value="">- Pilih Tahun Pelajaran -</option>
 							</select>
-							<div class="error-block"></div>
+							<div class="text-danger"></div>
 						</div>
                         <div class="mb-1">
 							<label for="harga" class="form-label">Harga</label>
-							<input type="text" class="form-control" id="harga" name="harga" placeholder="Contoh: 100000.-" value="">
-							<div class="error-block"></div>
+							<input type="text" class="form-control" id="harga" name="harga" placeholder="Contoh: Rp 100.000" value="">
+							<div class="text-danger"></div>
 						</div>
 					</form>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success saveBtn" data-target="harga_biaya">Simpan</button>
+				<button type="button" class="btn btn-primary saveBtn" data-target="harga_biaya">Simpan</button>
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 			</div>
 		</div>

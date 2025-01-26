@@ -8,6 +8,7 @@ class Seragam extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Masterdata_model', 'md');
+		$this->load->helper('actionbtn');
 	}
 
 	public function index()
@@ -21,26 +22,46 @@ class Seragam extends CI_Controller
 		$this->load->view('template', $data);
 	}
 
-	public function table_seragam()
-	{
+	public function table_seragam(){
 
-		$q = $this->md->getAllSeragamNotDeleted();
-		$dt = [];
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-				$dt[] = $row;
-			}
+		$q = $this->md->dataTablesSeragam();
 
-			$ret['status'] = true;
-			$ret['data'] = $dt;
-			$ret['message'] = '';
-		} else {
-			$ret['status'] = false;
-			$ret['data'] = [];
-			$ret['message'] = 'Data tidak tersedia';
+		$data  = array();
+		$no    = $_POST['start'];
+		foreach ($q['data'] as $da) {
+			$no++;
+			$row   = array();
+			$row[] = '<input type="checkbox" class="data-check" value="' . $da->id . '">';
+			$row[] = $no;
+			$row[] = $da->nama_seragam;
+			$row[] = actbtn($da->id, 'seragam');
+			$data[] = $row;
 		}
 
-		echo json_encode($ret);
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $q['recordTotal'],
+			"recordsFiltered" => $q['recordFiltered'],
+			"data" => $data,
+		);
+
+		// $q = $this->md->getAllSeragamNotDeleted();
+		// $dt = [];
+		// if ($q->num_rows() > 0) {
+		// 	foreach ($q->result() as $row) {
+		// 		$dt[] = $row;
+		// 	}
+
+		// 	$ret['status'] = true;
+		// 	$ret['data'] = $dt;
+		// 	$ret['message'] = '';
+		// } else {
+		// 	$ret['status'] = false;
+		// 	$ret['data'] = [];
+		// 	$ret['message'] = 'Data tidak tersedia';
+		// }
+
+		echo json_encode($output);
 	}
 
 	public function save_seragam(){
@@ -54,7 +75,7 @@ class Seragam extends CI_Controller
 			'deleted_at' => 0
 		);
 
-		$this->form_validation->set_rules('nama_seragam', 'Nama Seragam', 'trim|required', array('required' => '%s harus diisi'));
+		$this->form_validation->set_rules('nama_seragam', 'Nama Seragam', 'trim|required|alpha_numeric_space', array('required' => '%s harus diisi', 'alpha_numeric_space' => '%s hanya boleh mengandung huruf, angka dan spasi'));
 
 		if ($this->form_validation->run() == FALSE) {
 			$ret['status'] = false;
@@ -146,23 +167,47 @@ class Seragam extends CI_Controller
     public function table_stok()
 	{
 
-		$q = $this->md->getAllStokNotDeleted();
-		$dt = [];
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-				$dt[] = $row;
-			}
+		// $q = $this->md->getAllStokNotDeleted();
+		// $dt = [];
+		// if ($q->num_rows() > 0) {
+		// 	foreach ($q->result() as $row) {
+		// 		$dt[] = $row;
+		// 	}
 
-			$ret['status'] = true;
-			$ret['data'] = $dt;
-			$ret['message'] = '';
-		} else {
-			$ret['status'] = false;
-			$ret['data'] = [];
-			$ret['message'] = 'Data tidak tersedia';
+		// 	$ret['status'] = true;
+		// 	$ret['data'] = $dt;
+		// 	$ret['message'] = '';
+		// } else {
+		// 	$ret['status'] = false;
+		// 	$ret['data'] = [];
+		// 	$ret['message'] = 'Data tidak tersedia';
+		// }
+
+		$q = $this->md->dataTablesStok();
+
+		$data  = array();
+		$no    = $_POST['start'];
+		foreach ($q['data'] as $da) {
+			$no++;
+			$row   = array();
+			$row[] = '<input type="checkbox" class="data-check" value="' . $da->id . '">';
+			$row[] = $no;
+			$row[] = $da->nama_seragam;
+			$row[] = $da->nama_tahun_pelajaran;
+			$row[] = $da->ukuran;
+			$row[] = $da->stok;
+			$row[] = actbtn($da->id, 'stok');
+			$data[] = $row;
 		}
 
-		echo json_encode($ret);
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $q['recordTotal'],
+			"recordsFiltered" => $q['recordFiltered'],
+			"data" => $data,
+		);
+
+		echo json_encode($output);
 	}
 
     public function option_tahun_pelajaran()
@@ -205,7 +250,7 @@ class Seragam extends CI_Controller
 		$this->form_validation->set_rules('id_seragam', 'Nama Seragam', 'trim|required', array('required' => '%s harus diisi'));
 		$this->form_validation->set_rules('id_tahun_pelajaran', 'Tahun Pelajaran', 'trim|required', array('required' => '%s harus diisi'));
 		$this->form_validation->set_rules('ukuran', 'Ukuran', 'trim|required', array('required' => '%s harus diisi'));
-		$this->form_validation->set_rules('stok', 'Stok', 'trim|required|integer', array('required' => '%s harus diisi'));
+		$this->form_validation->set_rules('stok', 'Stok', 'trim|required|integer', array('required' => '%s harus diisi', 'numeric' => 'Diisi harus angka'));
 
 
 		if ($this->form_validation->run() == FALSE) {
@@ -246,6 +291,28 @@ class Seragam extends CI_Controller
 		
 		}
 	
+
+		// if ($id) {
+		// 	$q = $this->md->updateStok($id, $data);
+		// 	if ($q) {
+		// 		$ret['status'] = true;
+		// 		$ret['message'] = 'Data berhasil diupdate';
+		// 	} else {
+		// 		$ret['status'] = false;
+		// 		$ret['message'] = 'Data gagal diupdate';
+		// 	}
+		// } else {
+		// 	$data['created_at'] = date('Y-m-d H:i:s');
+		// 	$q = $this->md->insertStok($data);
+
+		// 	if ($q) {
+		// 		$ret['status'] = true;
+		// 		$ret['message'] = 'Data berhasil disimpan';
+		// 	} else {
+		// 		$ret['status'] = false;
+		// 		$ret['message'] = 'Data gagal disimpan';
+		// 	}
+		// }
     	echo json_encode($ret);
     }
 

@@ -8,6 +8,7 @@ class Biaya extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Masterdata_model', 'md');
+		$this->load->helper('actionbtn');
 	}
 
 	public function index()
@@ -22,26 +23,33 @@ class Biaya extends CI_Controller
 	}
 	
 
-    public function table_biaya()
-	{
+    public function table_biaya(){
 
-		$q = $this->md->getAllBiayaNotDeleted();
-		$dt = [];
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-				$dt[] = $row;
-			}
+		$q = $this->md->dataTablesBiaya();
 
-			$ret['status'] = true;
-			$ret['data'] = $dt;
-			$ret['message'] = '';
-		} else {
-			$ret['status'] = false;
-			$ret['data'] = [];
-			$ret['message'] = 'Data tidak tersedia';
+		$data  = array();
+		$no    = $_POST['start'];
+		foreach ($q['data'] as $da) {
+			$no++;
+			$row   = array();
+			$row[] = '<input type="checkbox" class="data-check" value="' . $da->id . '">';
+			$row[] = $no;
+			$row[] = $da->nama_biaya;
+			$row[] = $da->deskripsi;
+			$row[] = actbtn($da->id, 'biaya');
+			$data[] = $row;
 		}
 
-		echo json_encode($ret);
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $q['recordTotal'],
+			"recordsFiltered" => $q['recordFiltered'],
+			"data" => $data,
+		);
+
+		
+
+		echo json_encode($output);
 	}
 
     public function save_biaya()
@@ -61,42 +69,7 @@ class Biaya extends CI_Controller
 			foreach ($_POST as $key => $value) {
 				$ret['error'][$key] = form_error($key);
 			}
-			// $cek = $this->md->cekBiayaDuplicate($data['nama_biaya'], $id);
-			// if ($cek->num_rows() > 0) {
-			// 	$ret['status'] = false;
-			// 	$ret['message'] = 'Nama Biaya sudah ada';
-			// 	$ret['query'] = $this->db->last_query();
-			// } else {
-
-				// if ($id) {
-				// 	$update = $this->md->updateBiaya($id, $data);
-				// 	if ($update) {
-				// 		$ret = array(
-				// 			'status' => true,
-				// 			'message' => 'Data berhasil diupdate'
-				// 		);
-				// 	} else {
-				// 		$ret = array(
-				// 			'status' => false,
-				// 			'message' => 'Data gagal diupdate'
-				// 		);
-				// 	}
-				// } else {
-				// 	$data['created_at'] = date('Y-m-d H:i:s');
-				// 	$insert = $this->md->insertBiaya($data);
-
-				// 	if ($insert) {
-				// 		$ret = array(
-				// 			'status' => true,
-				// 			'message' => 'Data berhasil disimpan'
-				// 		);
-				// 	} else {
-				// 		$ret = array(
-				// 			'status' => false,
-				// 			'message' => 'Data gagal disimpan'
-				// 		);
-				// 	}
-				// }
+			
 			
 			} else {
 				if ($id) {
@@ -178,23 +151,32 @@ class Biaya extends CI_Controller
     //harga biaya
 
 	public function table_harga_biaya(){
-		$q = $this->md->getAllHargaBiaya();
-		$dt = [];
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-				$dt[] = $row;
-			}
+		
+		$q = $this->md->dataTablesHargaBiaya();
 
-			$ret['status'] = true;
-			$ret['data'] = $dt;
-			$ret['message'] = '';
-		} else {
-			$ret['status'] = false;
-			$ret['data'] = [];
-			$ret['message'] = 'Data tidak tersedia';
+		$data  = array();
+		$no    = $_POST['start'];
+		foreach ($q['data'] as $da) {
+			$no++;
+			$row   = array();
+			$row[] = '<input type="checkbox" class="data-check" value="' . $da->id . '">';
+			$row[] = $no;
+			$row[] = $da->nama_biaya;
+			$row[] = $da->nama_tahun_pelajaran;
+			$row[] = $da->harga;
+			$row[] = actbtn($da->id, 'harga_biaya');
+			$data[] = $row;
 		}
 
-		echo json_encode($ret);
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $q['recordTotal'],
+			"recordsFiltered" => $q['recordFiltered'],
+			"data" => $data,
+		);
+		
+
+		echo json_encode($output);
 	}
 
 	public function save_harga_biaya(){
@@ -208,12 +190,14 @@ class Biaya extends CI_Controller
 
 		$this->form_validation->set_rules('id_biaya', 'Nama Biaya', 'trim|required', array('required' => '%s harus diisi'));
 		$this->form_validation->set_rules('id_tahun_pelajaran', 'Tahun Jurusan', 'trim|required', array('required' => '%s harus diisi'));
-		$this->form_validation->set_rules('harga', 'Harga', 'trim|required', array('required' => '%s harus diisi'));
+		$this->form_validation->set_rules('harga', 'Harga', 'trim|required|regex_match[/^Rp\s\d{1,3}(\.\d{3})*$/]', array('required' => '%s harus diisi', 'regex_match' => 'Format Harga salah.'));
+
 		if ($this->form_validation->run() == FALSE) {
 			$ret['status'] = false;
 			foreach ($_POST as $key => $value) {
 				$ret['error'][$key] = form_error($key);
 			}
+			
 			
 			} else {
 				if ($id) {
@@ -302,4 +286,6 @@ class Biaya extends CI_Controller
 	}
 
 
+
+   
 }

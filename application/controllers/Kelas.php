@@ -8,6 +8,7 @@ class Kelas extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Masterdata_model', 'md');
+		$this->load->helper('actionbtn');
 	}
 
 	public function index()
@@ -32,7 +33,7 @@ class Kelas extends CI_Controller
 		echo $ret;
 	}
 
-	public function option_jurusan($id)
+	public function option_jurusan($id = null)
 	{
 
 		$q = $this->md->getJurusanByTahunPelajaranID($id);
@@ -47,24 +48,29 @@ class Kelas extends CI_Controller
 
 	public function table_kelas()
 	{
-		$q = $this->md->getAllKelasNotDeleted();
-		$dt = [];
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-				$dt[] = $row;
-			}
+		$q = $this->md->dataTablesKelas();
 
-			$ret['status'] = true;
-			$ret['data'] = $dt;
-			$ret['message'] = '';
-		} else {
-			$ret['status'] = false;
-			$ret['data'] = [];
-			$ret['message'] = 'Data tidak tersedia';
+		$data  = array();
+		$no    = $_POST['start'];
+		foreach ($q['data'] as $da) {
+			$no++;
+			$row   = array();
+			$row[] = '<input type="checkbox" class="data-check" value="' . $da->id . '">';
+			$row[] = $no;
+			$row[] = $da->nama_tahun_pelajaran;
+			$row[] = $da->nama_jurusan;
+			$row[] = $da->nama_kelas;
+			$row[] = actbtn($da->id, 'kelas');
+			$data[] = $row;
 		}
 
-
-		echo json_encode($ret);
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $q['recordTotal'],
+			"recordsFiltered" => $q['recordFiltered'],
+			"data" => $data,
+		);
+		echo json_encode($output);
 	}
 
 	public function save_kelas()
@@ -80,7 +86,7 @@ class Kelas extends CI_Controller
 
 		$this->form_validation->set_rules('id_tahun_pelajaran', 'Tahun Pelajaran', 'trim|required', array('required' => '%s harus diisi'));
 		$this->form_validation->set_rules('id_jurusan', 'Jurusan', 'trim|required', array('required' => '%s harus diisi'));
-		$this->form_validation->set_rules('nama_kelas', 'Kelas', 'trim|required', array('required' => '%s harus diisi'));
+		$this->form_validation->set_rules('nama_kelas', 'Kelas', 'trim|required|alpha_numeric_spaces', array('required' => '%s harus diisi', 'alpha_numeric_spaces' => '%s hanya boleh mengandung huruf, angka dan spasi'));
 
 		if ($this->form_validation->run() == FALSE) {
 			$ret['status'] = false;

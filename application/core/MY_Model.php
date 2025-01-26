@@ -1,3 +1,4 @@
+
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -83,19 +84,20 @@ class MY_Model extends CI_Model
 	}
 
 
-	public function get_datatables($col_order, $col_search, $order, $filter = null, $group_by = null, $query = null)
-    {
-        $this->column_order = $col_order;
-        $this->column_search = $col_search;
-        $this->tablequery = $query;
-        $this->order = $order;
-        $this->group_by = $group_by;
-        $this->_get_datatables_query($filter, $group_by);
-        if (isset($_POST["length"]) && $_POST["length"] != -1)
-            $this->db->limit($_POST['length'], $_POST['start']);
-        $query = $this->db->get();
-        return $query->result();
-    }
+	public function get_datatables($query = null, $col_order, $col_search, $order, $filter = Null, $group_by = null)
+	{
+		//$this->db = $this->load->database($db, TRUE);
+		$this->column_order = $col_order;
+		$this->column_search = $col_search;
+		$this->tablequery = $query;
+		$this->order = $order;
+		$this->group_by = $group_by;
+		$this->_get_datatables_query($filter, $group_by);
+		if (isset($_POST["length"]) && $_POST["length"] != -1)
+			$this->db->limit($_POST['length'], $_POST['start']);
+		$query = $this->db->get();
+		return $query->result();
+	}
 
 	public function count_filtered($query, $filter = null, $group_by = null)
 	{

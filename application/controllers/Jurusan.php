@@ -8,6 +8,7 @@ class Jurusan extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Masterdata_model', 'md');
+		$this->load->helper('actionbtn');
 	}
 
 	public function index()
@@ -21,26 +22,47 @@ class Jurusan extends CI_Controller
 		$this->load->view('template', $data);
 	}
 
-	public function table_jurusan()
-	{
+	public function table_jurusan(){
 
-		$q = $this->md->getAllJurusanNotDeleted();
-		$dt = [];
-		if ($q->num_rows() > 0) {
-			foreach ($q->result() as $row) {
-				$dt[] = $row;
-			}
+		$q = $this->md->dataTablesJurusan();
 
-			$ret['status'] = true;
-			$ret['data'] = $dt;
-			$ret['message'] = '';
-		} else {
-			$ret['status'] = false;
-			$ret['data'] = [];
-			$ret['message'] = 'Data tidak tersedia';
+		$data  = array();
+		$no    = $_POST['start'];
+		foreach ($q['data'] as $da) {
+			$no++;
+			$row   = array();
+			$row[] = '<input type="checkbox" class="data-check" value="' . $da->id . '">';
+			$row[] = $no;
+			$row[] = $da->nama_tahun_pelajaran;
+			$row[] = $da->nama_jurusan;
+			$row[] = actbtn($da->id, 'jurusan');
+			$data[] = $row;
 		}
 
-		echo json_encode($ret);
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $q['recordTotal'],
+			"recordsFiltered" => $q['recordFiltered'],
+			"data" => $data,
+		);
+
+		// $q = $this->md->getAllJurusanNotDeleted();
+		// $dt = [];
+		// if ($q->num_rows() > 0) {
+		// 	foreach ($q->result() as $row) {
+		// 		$dt[] = $row;
+		// 	}
+
+		// 	$ret['status'] = true;
+		// 	$ret['data'] = $dt;
+		// 	$ret['message'] = '';
+		// } else {
+		// 	$ret['status'] = false;
+		// 	$ret['data'] = [];
+		// 	$ret['message'] = 'Data tidak tersedia';
+		// }
+
+		echo json_encode($output);
 	}
 
 	public function option_tahun_pelajaran(){
@@ -102,11 +124,11 @@ class Jurusan extends CI_Controller
 		$id = $this->input->post('id');
         $data['nama_jurusan'] = $this->input->post('nama_jurusan');
 		$data['id_tahun_pelajaran'] = $this->input->post('id_tahun_pelajaran');
-		$data['created_at'] = date('Y-m-d H:i:s');
+
 		$data['updated_at'] = date('Y-m-d H:i:s');
 		$data['deleted_at'] = 0;
 
-		$this->form_validation->set_rules('nama_jurusan', 'Nama Jurusan', 'trim|required', array('required' => '%s harus diisi'));
+		$this->form_validation->set_rules('nama_jurusan', 'Nama Jurusan', 'trim|required|alpha_numeric_spaces', array('required' => '%s harus diisi', 'alpha_numeric_spaces' => '%s hanya boleh mengandung huruf, angka dan spasi'));
 		$this->form_validation->set_rules('id_tahun_pelajaran', 'Tahun Pelajaran', 'trim|required', array('required' => '%s harus diisi'));
 
 		if($this->form_validation->run() == FALSE){
@@ -129,6 +151,7 @@ class Jurusan extends CI_Controller
 					);
 				}
 			} else {
+				$data['created_at'] = date('Y-m-d H:i:s');
 				$insert = $this->md->insertJurusan($data);
 
 				if ($insert) {
@@ -145,6 +168,46 @@ class Jurusan extends CI_Controller
 			}
 		}
 
+		// if ($data['nama_jurusan']) {
+		// 	$cek = $this->md->cekJurusanDuplicate($data['nama_jurusan'], $data['id_tahun_pelajaran'], $id);
+		// 	if ($cek->num_rows() > 0) {
+		// 		$ret['status'] = false;
+		// 		$ret['message'] = 'Jurusan sudah ada';
+		// 	} else {
+				// if ($id) {
+				// 	$update = $this->md->updateJurusan($id, $data);
+				// 	if ($update) {
+				// 		$ret = array(
+				// 			'status' => true,
+				// 			'message' => 'Data berhasil diupdate'
+				// 		);
+				// 	} else {
+				// 		$ret = array(
+				// 			'status' => false,
+				// 			'message' => 'Data gagal diupdate'
+				// 		);
+				// 	}
+				// } else {
+				// 	$insert = $this->md->insertJurusan($data);
+
+				// 	if ($insert) {
+				// 		$ret = array(
+				// 			'status' => true,
+				// 			'message' => 'Data berhasil disimpan'
+				// 		);
+				// 	} else {
+				// 		$ret = array(
+				// 			'status' => false,
+				// 			'message' => 'Data gagal disimpan'
+				// 		);
+				// 	}
+				// }
+		// 	}
+			
+		// } else {
+		// 	$ret['status'] = false;
+		// 	$ret['message'] = 'Data gagal disimpan';
+		// }
 		echo json_encode($ret);
 	}
 
