@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 24 Jan 2025 pada 13.10
+-- Waktu pembuatan: 26 Jan 2025 pada 01.17
 -- Versi server: 8.0.30
--- Versi PHP: 8.1.10
+-- Versi PHP: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -150,7 +150,7 @@ INSERT INTO `data_kelas` (`id`, `id_tahun_pelajaran`, `id_jurusan`, `nama_kelas`
 (7, 1, 2, '10 rpl', '2025-01-19 02:36:54', '2025-01-19 02:36:54', '2025-01-20 00:43:16'),
 (8, 3, 6, '15 tkj', '2025-01-19 02:37:52', '2025-01-19 02:37:52', '2025-01-19 02:37:57'),
 (9, 0, 0, '2E TATA BOGA', '2025-01-20 20:13:45', '2025-01-20 20:13:45', '0000-00-00 00:00:00'),
-(10, 2, 1, '5A RPL', '2025-01-19 14:16:53', '2025-01-19 14:16:53', '0000-00-00 00:00:00'),
+(10, 3, 6, '2A TATA BOGA', '2025-01-25 07:12:10', '2025-01-25 07:12:10', '0000-00-00 00:00:00'),
 (11, 9, 10, '5C TKJ', '2025-01-20 00:43:06', '2025-01-20 00:43:06', '0000-00-00 00:00:00'),
 (12, 10, 11, '22B', '2025-01-20 01:16:32', '2025-01-20 01:16:32', '0000-00-00 00:00:00'),
 (13, 9, 10, '3F RPL', '2025-01-21 02:41:59', '2025-01-21 02:41:59', '0000-00-00 00:00:00'),
@@ -300,12 +300,59 @@ INSERT INTO `data_tahun_pelajaran` (`id`, `nama_tahun_pelajaran`, `tanggal_mulai
 (3, '2025-2027', '2025-01-20', '2027-05-10', '1', '2025-01-15 23:25:21', '2025-01-19 07:56:28', 0),
 (7, '2024/2025', '0000-00-00', '0000-00-00', '1', '2025-01-19 09:43:33', '2025-01-19 09:43:33', 2025),
 (8, '2025-2028', '2025-04-05', '2028-09-08', '1', '2025-01-19 21:14:27', '2025-01-19 21:14:27', 2025),
-(9, '2029-2030', '2029-03-03', '2030-08-08', '0', '2025-01-20 07:41:26', '2025-01-21 07:56:28', 0),
+(9, '2029-2030', '2029-03-03', '2030-09-09', '0', '2025-01-20 07:41:26', '2025-01-24 13:51:20', 0),
 (11, '2025-2026', '2025-01-06', '2026-01-05', '1', '0000-00-00 00:00:00', '2025-01-21 06:13:48', 1737414847),
 (12, '2025-2026', '2025-01-06', '2026-01-05', '1', '0000-00-00 00:00:00', '2025-01-21 06:18:04', 2025),
 (13, '2025-2026', '2025-01-06', '2026-01-05', '1', '0000-00-00 00:00:00', '2025-01-21 06:18:04', 1737415093),
 (14, '2028-2030', '2028-02-02', '2030-03-03', '1', '2025-01-21 07:56:11', '2025-01-21 07:56:11', 0),
-(15, '2027-2028', '2027-09-09', '2028-08-08', '1', '2025-01-24 12:09:05', '2025-01-24 12:09:05', 0);
+(16, '2029-2030', '2029-03-03', '2030-09-09', '0', '2025-01-24 13:50:59', '2025-01-24 13:50:59', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pendaftaran_awal`
+--
+
+CREATE TABLE `pendaftaran_awal` (
+  `id` int NOT NULL,
+  `no_pendaftaran` varchar(50) NOT NULL,
+  `id_tahun_pelajaran` int NOT NULL,
+  `id_jurusan` int NOT NULL,
+  `id_kelas` int NOT NULL,
+  `nama_siswa` varchar(100) NOT NULL,
+  `nik` varchar(20) NOT NULL,
+  `agama` varchar(20) NOT NULL,
+  `nisn` varchar(20) NOT NULL,
+  `jenis_kelamin` varchar(20) NOT NULL,
+  `tempat_lahir` varchar(100) NOT NULL,
+  `tanggal_lahir` date NOT NULL,
+  `alamat` varchar(100) NOT NULL,
+  `no_telepon` varchar(20) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `asal_sekolah` varchar(100) NOT NULL,
+  `nama_ayah` varchar(100) NOT NULL,
+  `nama_ibu` varchar(100) NOT NULL,
+  `no_telepon_ayah` varchar(20) NOT NULL,
+  `no_telepon_ibu` varchar(20) NOT NULL,
+  `pekerjaan_ayah` varchar(50) NOT NULL,
+  `pekerjaan_ibu` varchar(50) NOT NULL,
+  `nama_wali` varchar(100) NOT NULL,
+  `no_telepon_wali` varchar(20) NOT NULL,
+  `pekerjaan_wali` varchar(50) NOT NULL,
+  `alamat_wali` varchar(100) NOT NULL,
+  `sumber_informasi` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` int NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data untuk tabel `pendaftaran_awal`
+--
+
+INSERT INTO `pendaftaran_awal` (`id`, `no_pendaftaran`, `id_tahun_pelajaran`, `id_jurusan`, `id_kelas`, `nama_siswa`, `nik`, `agama`, `nisn`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `alamat`, `no_telepon`, `email`, `asal_sekolah`, `nama_ayah`, `nama_ibu`, `no_telepon_ayah`, `no_telepon_ibu`, `pekerjaan_ayah`, `pekerjaan_ibu`, `nama_wali`, `no_telepon_wali`, `pekerjaan_wali`, `alamat_wali`, `sumber_informasi`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, '0000-TATA BOGA-0001', 3, 6, 10, 'bayu', '1234567890987654', 'Islam', '0987654321', 'Laki-laki', 'jambi', '2025-01-14', 'jambi', '081234567890', 'bayuyu@gmail.com', 'jambi', 'pak bayu', 'mak bayu', '098765432123', '098765432123', 'petani', 'buruh', '-', '-', '-', 'entah', 'Spanduk', '2025-01-26 00:49:15', '2025-01-26 00:49:15', 0),
+(2, '0000-TATA BOGA-0002', 3, 6, 14, 'Deswita Ananda', '1234567890987654', 'Islam', '1234567891', 'Perempuan', 'Medan', '2003-12-13', 'Medan', '081267385674', 'deswitaananda0322@gmail.com', 'Kamang Magek', 'Ayah', 'Ibu', '081234567890', '081234567890', 'petani', 'buruh', '-', '-', '-', 'Medan', 'Website', '2025-01-26 00:52:46', '2025-01-26 00:52:46', 0);
 
 -- --------------------------------------------------------
 
@@ -382,6 +429,12 @@ ALTER TABLE `data_tahun_pelajaran`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `pendaftaran_awal`
+--
+ALTER TABLE `pendaftaran_awal`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
@@ -438,7 +491,13 @@ ALTER TABLE `data_stok`
 -- AUTO_INCREMENT untuk tabel `data_tahun_pelajaran`
 --
 ALTER TABLE `data_tahun_pelajaran`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT untuk tabel `pendaftaran_awal`
+--
+ALTER TABLE `pendaftaran_awal`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
